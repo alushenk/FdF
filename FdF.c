@@ -63,7 +63,13 @@ int    close_window(int key, t_struct *mlx)
         mlx->y -= 10;
         put_rect(mlx->x, mlx->y, mlx->init, mlx->window);
     }
-    return (1);
+    return (0);
+}
+
+int     print_mouse(int key, int x, int y, t_struct *mlx)
+{
+    printf("key = %d\t x = %d\t y = %d\n", key, x, y);
+    return (0);
 }
 
 void    fdf()
@@ -81,6 +87,7 @@ void    fdf()
         printf("error");
     put_rect(mlx->x, mlx->y, mlx->init, mlx->window);
 
-    mlx_key_hook(mlx->window, &close_window, mlx);
+    mlx_key_hook(mlx->window, close_window, mlx);
+    mlx_mouse_hook(mlx->window, print_mouse, mlx);
     mlx_loop(mlx->init);
 }
