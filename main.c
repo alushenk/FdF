@@ -33,16 +33,18 @@ void    parse_file(char *path)
 
     print_mas(&mas);
 
-    printf("%d\n", mas.cols);
-    printf("%d\n", mas.rows);
+    fdf_image();
 
 }
 
 int main(int argc, char **argv)
 {
     if (argc == 2)
+    {
         parse_file(argv[1]);
+    }
     else
-        fdf();
+        printf("arguments needed");
     return (0);
+
 }

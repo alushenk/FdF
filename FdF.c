@@ -12,6 +12,7 @@ void    struct_init(t_struct **mlx)
     (*mlx)->y = 0;
     (*mlx)->init = NULL;
     (*mlx)->window = NULL;
+    (*mlx)->image = NULL;
 }
 
 void    put_rect(int x, int y, void *init, void *window)
@@ -85,9 +86,31 @@ void    fdf()
     mlx->window = mlx_new_window(mlx->init, WINDOW_SIZE_X, WINDOW_SIZE_Y, "FdF");
     if (mlx->window == NULL)
         printf("error");
-    put_rect(mlx->x, mlx->y, mlx->init, mlx->window);
+    //put_rect(mlx->x, mlx->y, mlx->init, mlx->window);
+    draw_line(10, 10, 500, 500, mlx);
 
     mlx_key_hook(mlx->window, close_window, mlx);
-    mlx_mouse_hook(mlx->window, print_mouse, mlx);
+    //mlx_mouse_hook(mlx->window, print_mouse, mlx);
+    mlx_loop(mlx->init);
+}
+
+void    fdf_image()
+{
+    t_struct *mlx;
+
+    mlx = NULL;
+    struct_init(&mlx);
+
+    mlx->init = mlx_init();
+    if (mlx->init == NULL)
+        printf("error");
+    mlx->window = mlx_new_window(mlx->init, WINDOW_SIZE_X, WINDOW_SIZE_Y, "FdF");
+    if (mlx->window == NULL)
+        printf("error");
+    //put_rect(mlx->x, mlx->y, mlx->init, mlx->window);
+    draw(&mlx);
+
+    mlx_key_hook(mlx->window, close_window, mlx);
+    //mlx_mouse_hook(mlx->window, print_mouse, mlx);
     mlx_loop(mlx->init);
 }

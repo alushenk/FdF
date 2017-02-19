@@ -5,7 +5,8 @@
 #ifndef FDF_FDF_H
 #define FDF_FDF_H
 
-# include "mlx.h"
+# include <math.h>
+# include <mlx.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
@@ -15,10 +16,16 @@
 #define WINDOW_SIZE_X 900
 #define WINDOW_SIZE_Y 600
 
+#define DIST = 10
+
 typedef struct      s_struct
 {
     void    *init;
     void    *window;
+    int     *image;
+    char    *image_data;
+
+    int size_line;
 
     int x;
     int y;
@@ -39,5 +46,11 @@ void    fdf();
 void    mas_get_size(char *path, t_mas *mas);
 void    mas_create(t_mas *mas);
 void    mas_fill(char *path, t_mas *mas);
+/*
+** draw.c
+*/
+void    draw_line(int x0, int y0, int x1, int y1, t_struct *mlx);
+void    draw(t_struct **mlx);
+void    fdf_image();
 
 #endif //FDF_FDF_H
