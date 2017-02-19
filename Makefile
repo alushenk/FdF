@@ -8,18 +8,20 @@ SRC =   main.c \
 
 OBJ = $(SRC:.c=.o)
 
-LIBOBJ = libft/*.o
+LIB_PATH = ../../LIBFT/
 
-HEAD = -I ft_printf.h
+LIBOBJ = $(LIB_PATH)*.o
+
+HEAD = -I FdF.h
 
 CFLAGS = -c -Wall -Wextra -Werror
 
-LIBINC = -I libft/libft.h -L./libft -lft
+LIBINC = -I $(LIB_PATH)/libft.h -L.$(LIB_PATH) -lft
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	make -C libft/
+	make -C $(LIB_PATH)
 	ar rc $(NAME) $(OBJ) $(LIBOBJ)
 	ranlib $(NAME)
 
@@ -28,10 +30,10 @@ $(NAME): $(OBJ)
 
 clean:
 	rm -f $(OBJ)
-	make clean -C libft/
+	make clean -C $(LIB_PATH)
 
 fclean: clean
 	rm -f $(NAME)
-	make fclean -C libft/
+	make fclean -C $(LIB_PATH)
 
 re: fclean all

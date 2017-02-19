@@ -4,25 +4,44 @@
 
 #include "FdF.h"
 
+void    print_mas(t_mas *mas)
+{
+    int i;
+    int j;
 
+    i = 0;
+    while (i < mas->rows)
+    {
+        j = 0;
+        while (j < mas->cols)
+        {
+            printf("%-3d", mas->arr[i][j]);
+            j++;
+        }
+        i++;
+        printf("\n");
+    }
+}
 
+void    parse_file(char *path)
+{
+    t_mas mas;
 
+    mas_get_size(path, &mas);
+    mas_create(&mas);
+    mas_fill(path, &mas);
+
+    print_mas(&mas);
+
+    printf("%d\n", mas.cols);
+    printf("%d\n", mas.rows);
+
+}
 
 int main(int argc, char **argv)
 {
-    int fd;
-    char *line;
-
     if (argc == 2)
-    {
-        fd = open(argv[1], O_RDONLY);
-        //while not end of file maybe? != -1
-        while (get_next_line(fd, &line))
-        {
-            printf("%s\n", line);
-            free(line);
-        }
-    }
+        parse_file(argv[1]);
     else
         fdf();
     return (0);
