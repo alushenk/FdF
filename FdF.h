@@ -16,41 +16,37 @@
 #define WINDOW_SIZE_X 900
 #define WINDOW_SIZE_Y 600
 
-#define DIST = 10
+#define DIST 3
+#define ANGLE 0
+
+int g_angle;
+int x_center;
+int y_center;
 
 typedef struct      s_struct
 {
+    int cols;
+    int rows;
+    int **arr;
+
     void    *init;
     void    *window;
     void    *image;
     char    *image_data;
     int     bits_per_pixel;
     int     line_size;
-
-    int x;
-    int y;
 }                   t_struct;
-
-typedef struct      s_mas
-{
-    int cols;
-    int rows;
-    int **arr;
-}                   t_mas;
-
-void    fdf();
 
 /*
 ** array.c
 */
-void    mas_get_size(char *path, t_mas *mas);
-void    mas_create(t_mas *mas);
-void    mas_fill(char *path, t_mas *mas);
+void    mas_get_size(char *path, t_struct *mas);
+void    mas_create(t_struct *mas);
+void    mas_fill(char *path, t_struct *mas);
 /*
 ** draw.c
 */
 void    draw_line(int x0, int y0, int x1, int y1, t_struct *mlx);
-void    draw(t_struct **mlx);
-void    fdf_image();
+void    fdf(t_struct *mlx);
 
 #endif //FDF_FDF_H

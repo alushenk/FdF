@@ -4,18 +4,18 @@
 
 #include "FdF.h"
 
-void    print_mas(t_mas *mas)
+void    print_mlx(t_struct *mlx)
 {
     int i;
     int j;
 
     i = 0;
-    while (i < mas->rows)
+    while (i < mlx->rows)
     {
         j = 0;
-        while (j < mas->cols)
+        while (j < mlx->cols)
         {
-            printf("%-3d", mas->arr[i][j]);
+            printf("%-3d", mlx->arr[i][j]);
             j++;
         }
         i++;
@@ -25,20 +25,21 @@ void    print_mas(t_mas *mas)
 
 void    parse_file(char *path)
 {
-    t_mas mas;
+    t_struct mlx;
 
-    mas_get_size(path, &mas);
-    mas_create(&mas);
-    mas_fill(path, &mas);
+    mas_get_size(path, &mlx);
+    mas_create(&mlx);
+    mas_fill(path, &mlx);
 
-    print_mas(&mas);
+    //print_mlx(&mlx);
 
-    fdf_image();
+    fdf(&mlx);
 
 }
 
 int main(int argc, char **argv)
 {
+    g_angle = 0;
     if (argc == 2)
     {
         parse_file(argv[1]);

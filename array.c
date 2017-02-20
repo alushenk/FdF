@@ -21,7 +21,7 @@ static int     get_nums_count(char *str)
     return (result);
 }
 
-void    mas_get_size(char *path, t_mas *mas)
+void    mas_get_size(char *path, t_struct *mas)
 {
     int fd;
     char *line;
@@ -44,7 +44,7 @@ void    mas_get_size(char *path, t_mas *mas)
     close(fd);
 }
 
-void    mas_create(t_mas *mas)
+void    mas_create(t_struct *mas)
 {
     int **result;
     int i;
@@ -59,7 +59,7 @@ void    mas_create(t_mas *mas)
     mas->arr = result;
 }
 
-void    mas_fill(char *path, t_mas *mas)
+void    mas_fill(char *path, t_struct *mas)
 {
     int     fd;
     char    *line;
