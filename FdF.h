@@ -22,10 +22,10 @@ typedef struct      s_struct
 {
     void    *init;
     void    *window;
-    int     *image;
+    void    *image;
     char    *image_data;
-
-    int size_line;
+    int     bits_per_pixel;
+    int     line_size;
 
     int x;
     int y;
