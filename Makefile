@@ -3,16 +3,20 @@
 
 NAME = FdF.a
 
+SRCDIR = src
+
 SRC =   main.c \
-        FdF.c
+        FdF.c \
+        array.c \
+        draw.c \
 
-OBJ = $(SRC:.c=.o)
+OBJ = $($(SRCDIR)/SRC:.c=.o)
 
-LIB_PATH = ../../LIBFT/
+LIB_PATH = externals/libft/
 
 LIBOBJ = $(LIB_PATH)*.o
 
-HEAD = -I FdF.h
+HEAD = -I $(SRCDIR)/FdF.h
 
 CFLAGS = -c -Wall -Wextra -Werror
 

@@ -10,8 +10,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# include "../get_next_line/get_next_line.h"
-# include "../../LIBFT/libft.h"
+# include "externals/get_next_line/get_next_line.h"
+# include "externals/libft/libft.h"
 
 #define WINDOW_SIZE_X 900
 #define WINDOW_SIZE_Y 600

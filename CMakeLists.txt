@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.6)
 project(FdF)
  
-set(LIB_PATH ../../LIBFT)
-set(GET_NEXT_LINE_PATH ../get_next_line)
+set(LIB_PATH externals/libft)
+set(GET_NEXT_LINE_PATH externals/get_next_line)
 
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_FLAGS "-lmlx -framework OpenGL -framework AppKit" )
