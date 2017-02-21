@@ -5,9 +5,12 @@ set(LIB_PATH externals/libft)
 set(GET_NEXT_LINE_PATH externals/get_next_line)
 
 set(CMAKE_C_STANDARD 99)
-set(CMAKE_C_FLAGS "-lmlx -framework OpenGL -framework AppKit" )
+set(UBUNTU_FLAGS " -lmlx -lXext -lX11")
+set(MACOS_FLAGS "-lmlx -framework OpenGL -framework AppKit")
+set(CMAKE_C_FLAGS ${})
 
-set(SOURCE_FILES main.c FdF.c array.c draw.c)
+file(GLOB SOURCE_FILES src/*.c)
+set(SOURCE_FILES)
 add_executable(FdF ${SOURCE_FILES} ${GET_NEXT_LINE_PATH}/get_next_line.c)
 
 file(GLOB SOURCES_LIB ${LIB_PATH}/*.c)
