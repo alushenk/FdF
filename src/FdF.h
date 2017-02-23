@@ -10,28 +10,36 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# include "externals/get_next_line/get_next_line.h"
-# include "externals/libft/libft.h"
+# include "../externals/get_next_line/get_next_line.h"
+# include "../externals/libft/libft.h"
 
-#define WINDOW_SIZE_X 900
-#define WINDOW_SIZE_Y 600
+# define WINDOW_SIZE_X 900
+# define WINDOW_SIZE_Y 600
 
-#define DIST 3
-#define ANGLE 0
-
-int g_angle;
-int x_center;
-int y_center;
+#define KEY_LEFT 123
+#define KEY_RIGHT 124
+#define KEY_UP 126
+#define KEY_DOWN 125
+#define KEY_SCALE_INCREASE 69
+#define KEY_SCALE_DECREASE 78
 
 typedef struct      s_struct
 {
     int cols;
     int rows;
-    int **arr;
+
+    int zoom;
+    int angle;
+
+
+    double **arr_x;
+    double **arr_y;
+    double **arr_z;
 
     void    *init;
     void    *window;
     void    *image;
+    int     endian;
     char    *image_data;
     int     bits_per_pixel;
     int     line_size;
@@ -40,13 +48,19 @@ typedef struct      s_struct
 /*
 ** array.c
 */
-void    mas_get_size(char *path, t_struct *mas);
-void    mas_create(t_struct *mas);
-void    mas_fill(char *path, t_struct *mas);
+void    parse_file(char *path, t_struct *mlx);
 /*
 ** draw.c
 */
-void    draw_line(int x0, int y0, int x1, int y1, t_struct *mlx);
-void    fdf(t_struct *mlx);
+void    draw(t_struct *mlx);
+/*
+** events.c
+*/
+int    key_hook(int key, t_struct *mlx);
+/*
+** matrix.c
+*/
+void    prepare_matrix(t_struct *mlx);
+
 
 #endif //FDF_FDF_H

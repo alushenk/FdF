@@ -4,16 +4,7 @@
 
 #include "FdF.h"
 
-void    struct_init(t_struct **mlx)
-{
-    if (*mlx == NULL)
-        *mlx = (t_struct*)malloc(sizeof(t_struct));
-    (*mlx)->init = NULL;
-    (*mlx)->window = NULL;
-    (*mlx)->image = NULL;
-}
-
-void    write_pixel(int x, int y, t_struct *mlx)
+static void    write_pixel(int x, int y, t_struct *mlx)
 {
     int a;
 
@@ -23,34 +14,14 @@ void    write_pixel(int x, int y, t_struct *mlx)
     mlx->image_data[a + 2] = 0;
 }
 
-int    key_hook(int key, t_struct *mlx)
+static int     in_range(int x, int y, int max_x, int max_y)
 {
-    if (key == 0)
-    {
-        //mlx_destroy_window(mlx->init, mlx->window);
-        exit(0);
-    }
-    if (key == 86)
-    {
-    }
-    if (key == 88)
-    {
-        //g_angle++;
-        //fdf(mlx);
-        //end program, free shit
-        //launch fdf(), but with new image, not window. with new angle values
-    }
-    return (0);
-}
-
-int     in_range(int x, int y, int max_x, int max_y)
-{
-    if (x < 0 || y < 0 || x >= WINDOW_SIZE_X || y >= WINDOW_SIZE_Y || x > ((max_x + x_center) * DIST) || y > ((max_y + y_center) * DIST))
+    if (x < 0 || y < 0 || x >= WINDOW_SIZE_X || y >= WINDOW_SIZE_Y || x > (max_x * 30) || y > (max_y * 30))
         return (0);
     return (1);
 }
 
-void    draw_line(int x0, int y0, int x1, int y1, t_struct *mlx)
+static void    draw_line(int x0, int y0, int x1, int y1, t_struct *mlx)
 {
     int     move_x;
     int     move_y;
@@ -86,7 +57,7 @@ void    draw_line(int x0, int y0, int x1, int y1, t_struct *mlx)
     }
 }
 
-void    draw_map(t_struct *mlx)
+static void    draw_map(t_struct *mlx)
 {
     int x;
     int y;
@@ -95,47 +66,35 @@ void    draw_map(t_struct *mlx)
     int x2;
     int y2;
 
-    x_center = WINDOW_SIZE_X / 2;
-    y_center = WINDOW_SIZE_Y / 2;
-
-    y = y_center;
-    while (y < ((mlx->rows + y_center) * DIST))
+    mlx->cols--;
+    mlx->rows--;
+    y = 0;
+    while (y <= mlx->rows)
     {
-        x = x_center;
-        while (x < ((mlx->cols + x_center) * DIST))
+        x = 0;
+        while (x <= mlx->cols)
         {
-            //x1 = (x * DIST) * cos(g_angle) - (y * DIST) * sin(g_angle);
-            //y1 = (x * DIST) * cos(g_angle) + (y * DIST) * cos(g_angle);
-            //x2 = ((x + 1) * DIST) * cos(g_angle) - (y * DIST) * sin(g_angle);
-            //y2 = (x * DIST) * cos(g_angle) + ((y + 1) * DIST)  * cos(g_angle);
-            x1 = (x + x_center) * DIST;
-            y1 = (y + y_center) * DIST;
-            x2 = (x + 1 + x_center) * DIST;
-            y2 = (y + 1 + y_center) * DIST;
+            x1 = x * 30;
+            y1 = y  * 30;
+            x2 = (x + 1) * 30;
+            y2 = (y + 1) * 30;
             draw_line(x1, y1, x2, y1, mlx);
             draw_line(x1, y1, x1, y2, mlx);
             x++;
         }
         y++;
     }
-    //draw_line(0, 0, 300, 300, mlx);
 }
 
-void    fdf(t_struct *mlx)
+void    draw(t_struct *mlx)
 {
-    int endian;
-
-    struct_init(&mlx);
-    mlx->init = mlx_init();
-    mlx->window = mlx_new_window(mlx->init, WINDOW_SIZE_X, WINDOW_SIZE_Y, "FdF");
-
+    if (mlx->image)
+        mlx_destroy_image(mlx->init, mlx->image);
     mlx->image = mlx_new_image(mlx->init, WINDOW_SIZE_X, WINDOW_SIZE_Y);
-    mlx->image_data = mlx_get_data_addr(mlx->image, &mlx->bits_per_pixel, &mlx->line_size, &endian);
+    mlx->image_data = mlx_get_data_addr(mlx->image, &mlx->bits_per_pixel, &mlx->line_size, &mlx->endian);
 
+    //центровку и сайз надо делать где-то снаружи, один раз
+    prepare_matrix(mlx);
     draw_map(mlx);
-
     mlx_put_image_to_window(mlx->init, mlx->window, mlx->image, 0, 0);
-    mlx_key_hook(mlx->window, key_hook, mlx);
-    //mlx_mouse_hook(mlx->window, print_mouse, mlx);
-    mlx_loop(mlx->init);
 }

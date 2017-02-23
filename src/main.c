@@ -4,18 +4,18 @@
 
 #include "FdF.h"
 
-void    print_mlx(t_struct *mlx)
+void    print_mlx(double **arr, int rows, int cols)
 {
     int i;
     int j;
 
     i = 0;
-    while (i < mlx->rows)
+    while (i < rows)
     {
         j = 0;
-        while (j < mlx->cols)
+        while (j < cols)
         {
-            printf("%-3d", mlx->arr[i][j]);
+            printf("%-15f", arr[i][j]);
             j++;
         }
         i++;
@@ -23,26 +23,42 @@ void    print_mlx(t_struct *mlx)
     }
 }
 
-void    parse_file(char *path)
+static void    struct_init(t_struct **mlx)
 {
-    t_struct mlx;
-
-    mas_get_size(path, &mlx);
-    mas_create(&mlx);
-    mas_fill(path, &mlx);
-
-    //print_mlx(&mlx);
-
-    fdf(&mlx);
-
+    if (*mlx == NULL)
+        *mlx = (t_struct*)malloc(sizeof(t_struct));
+    (*mlx)->init = NULL;
+    (*mlx)->window = NULL;
+    (*mlx)->image = NULL;
+    (*mlx)->zoom = 10;
+    (*mlx)->angle = 0;
 }
 
 int main(int argc, char **argv)
 {
-    g_angle = 0;
+    t_struct *mlx;
+
     if (argc == 2)
     {
-        parse_file(argv[1]);
+        struct_init(&mlx);
+        parse_file(argv[1], mlx);
+        mlx->init = mlx_init();
+        mlx->window = mlx_new_window(mlx->init, WINDOW_SIZE_X, WINDOW_SIZE_Y, "FdF");
+
+        /*
+        print_mlx(mlx->arr_x, mlx->rows, mlx->cols);
+        printf("\n");
+        print_mlx(mlx->arr_y, mlx->rows, mlx->cols);
+        printf("\n");
+        print_mlx(mlx->arr_z, mlx->rows, mlx->cols);
+        printf("\n");
+        */
+
+        draw(mlx);
+
+        mlx_key_hook(mlx->window, key_hook, mlx);
+        //mlx_mouse_hook(mlx->window, print_mouse, mlx);
+        mlx_loop(mlx->init);
     }
     else
         printf("arguments needed");

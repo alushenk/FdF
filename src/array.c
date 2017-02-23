@@ -21,7 +21,7 @@ static int     get_nums_count(char *str)
     return (result);
 }
 
-void    mas_get_size(char *path, t_struct *mas)
+static void    mas_get_size(char *path, t_struct *mas)
 {
     int fd;
     char *line;
@@ -44,22 +44,22 @@ void    mas_get_size(char *path, t_struct *mas)
     close(fd);
 }
 
-void    mas_create(t_struct *mas)
+static void    mas_create(double ***arr, int rows, int cols)
 {
-    int **result;
+    double **result;
     int i;
 
-    result = (int**)malloc(sizeof(int*) * mas->rows);
+    result = (double**)malloc(sizeof(double*) * rows);
     i = 0;
-    while (i < mas->rows)
+    while (i < rows)
     {
-        result[i] = (int*)malloc(sizeof(int) * mas->cols);
+        result[i] = (double*)malloc(sizeof(double) * cols);
         i++;
     }
-    mas->arr = result;
+    *arr = result;
 }
 
-void    mas_fill(char *path, t_struct *mas)
+static void    mas_fill(char *path, t_struct *mas)
 {
     int     fd;
     char    *line;
@@ -75,11 +75,22 @@ void    mas_fill(char *path, t_struct *mas)
         j = 0;
         while (*tmp)
         {
-            mas->arr[i][j] = atoi_skip(&tmp);
+            mas->arr_z[i][j] = atoi_skip(&tmp);
+            mas->arr_x[i][j] = j;
+            mas->arr_y[i][j] = i;
             j++;
         }
         free(line);
         i++;
     }
     close(fd);
+}
+
+void    parse_file(char *path, t_struct *mlx)
+{
+    mas_get_size(path, mlx);
+    mas_create(&mlx->arr_x, mlx->rows, mlx->cols);
+    mas_create(&mlx->arr_y, mlx->rows, mlx->cols);
+    mas_create(&mlx->arr_z, mlx->rows, mlx->cols);
+    mas_fill(path, mlx);
 }
