@@ -14,9 +14,9 @@ static void    write_pixel(int x, int y, t_struct *mlx)
     mlx->image_data[a + 2] = 0;
 }
 
-static int     in_range(int x, int y, int max_x, int max_y)
+static int     in_range(int x, int y, int max_x, int max_y, double multiplier)
 {
-    if (x < 0 || y < 0 || x >= WINDOW_SIZE_X || y >= WINDOW_SIZE_Y || x > (max_x * 30) || y > (max_y * 30))
+    if (x < 0 || y < 0 || x >= WINDOW_SIZE_X || y >= WINDOW_SIZE_Y)
         return (0);
     return (1);
 }
@@ -37,11 +37,11 @@ static void    draw_line(int x0, int y0, int x1, int y1, t_struct *mlx)
     delta_y = abs(y1 - y0);
     error = delta_x - delta_y;
 
-    if (in_range(x1, y1, mlx->cols, mlx->rows))
+    if (in_range(x1, y1, mlx->cols, mlx->rows, mlx->zoom))
         write_pixel(x1, y1, mlx);
     while (x0 != x1 || y0 != y1)
     {
-        if (in_range(x0, y0, mlx->cols, mlx->rows))
+        if (in_range(x0, y0, mlx->cols, mlx->rows, mlx->zoom))
             write_pixel(x0, y0, mlx);
         error2 = error * 2;
         if (error2 > -delta_y)
@@ -61,10 +61,6 @@ static void    draw_map(t_struct *mlx)
 {
     int x;
     int y;
-    int x1;
-    int y1;
-    int x2;
-    int y2;
 
     mlx->cols--;
     mlx->rows--;
@@ -74,12 +70,10 @@ static void    draw_map(t_struct *mlx)
         x = 0;
         while (x <= mlx->cols)
         {
-            x1 = x * 30;
-            y1 = y  * 30;
-            x2 = (x + 1) * 30;
-            y2 = (y + 1) * 30;
-            draw_line(x1, y1, x2, y1, mlx);
-            draw_line(x1, y1, x1, y2, mlx);
+            if (x + 1 <= mlx->cols)
+                draw_line(mlx->arr_x[y][x], mlx->arr_y[y][x], mlx->arr_x[y][x + 1], mlx->arr_y[y][x], mlx);
+            if (y + 1 <= mlx->rows)
+                draw_line(mlx->arr_x[y][x], mlx->arr_y[y][x], mlx->arr_x[y][x], mlx->arr_y[y + 1][x], mlx);
             x++;
         }
         y++;

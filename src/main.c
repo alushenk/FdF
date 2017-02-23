@@ -30,7 +30,9 @@ static void    struct_init(t_struct **mlx)
     (*mlx)->init = NULL;
     (*mlx)->window = NULL;
     (*mlx)->image = NULL;
-    (*mlx)->zoom = 10;
+    (*mlx)->zoom = 1;
+    (*mlx)->center_x = 0;
+    (*mlx)->center_y = 0;
     (*mlx)->angle = 0;
 }
 

@@ -22,13 +22,18 @@
 #define KEY_DOWN 125
 #define KEY_SCALE_INCREASE 69
 #define KEY_SCALE_DECREASE 78
+#define KEY_EXIT 53
+#define KEY_ROTATE_Z_RIGHT 85
+#define KEY_ROTATE_Z_LEFT 83
 
 typedef struct      s_struct
 {
     int cols;
     int rows;
 
-    int zoom;
+    double zoom;
+    double center_x;
+    double center_y;
     int angle;
 
 
@@ -62,5 +67,8 @@ int    key_hook(int key, t_struct *mlx);
 */
 void    prepare_matrix(t_struct *mlx);
 
+
+
+void    print_mlx(double **arr, int rows, int cols);
 
 #endif //FDF_FDF_H

@@ -6,15 +6,39 @@
 
 int    key_hook(int key, t_struct *mlx)
 {
-    if (key == 0)
+    if (key == KEY_SCALE_INCREASE)
     {
-        //mlx_destroy_window(mlx->init, mlx->window);
+        mlx->zoom *= 1.5;
+        draw(mlx);
+    }
+    else if (key == KEY_SCALE_DECREASE)
+    {
+        mlx->zoom *= 0.5;
+        draw(mlx);
+    }
+    else if (key == KEY_RIGHT)
+    {
+    }
+    else if (key == KEY_LEFT)
+    {
+    }
+    else if (key == KEY_UP)
+    {
+    }
+    else if (key == KEY_DOWN)
+    {
+    }
+    else if (key == KEY_EXIT)
+    {
         exit(0);
     }
-    if (key == 86)
+    else if (key == KEY_ROTATE_Z_RIGHT)
     {
     }
-    if (key == 88)
+    else if (key == KEY_ROTATE_Z_LEFT)
+    {
+    }
+    else if (key == 88)
     {
         //g_angle++;
         //fdf(mlx);
