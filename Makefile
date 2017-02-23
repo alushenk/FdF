@@ -9,6 +9,9 @@ SRC =   main.c \
         FdF.c \
         array.c \
         draw.c \
+        matrix.c \
+        events.c \
+        externals/get_next_line/get_next_line.c
 
 OBJ = $($(SRCDIR)/SRC:.c=.o)
 

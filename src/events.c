@@ -8,12 +8,12 @@ int    key_hook(int key, t_struct *mlx)
 {
     if (key == KEY_SCALE_INCREASE)
     {
-        mlx->zoom *= 1.5;
+        mlx->zoom = 1.5;
         draw(mlx);
     }
     else if (key == KEY_SCALE_DECREASE)
     {
-        mlx->zoom *= 0.5;
+        mlx->zoom = 0.5;
         draw(mlx);
     }
     else if (key == KEY_RIGHT)

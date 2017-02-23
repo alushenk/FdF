@@ -62,17 +62,15 @@ static void    draw_map(t_struct *mlx)
     int x;
     int y;
 
-    mlx->cols--;
-    mlx->rows--;
     y = 0;
-    while (y <= mlx->rows)
+    while (y < mlx->rows)
     {
         x = 0;
-        while (x <= mlx->cols)
+        while (x < mlx->cols)
         {
-            if (x + 1 <= mlx->cols)
+            if (x + 1 < mlx->cols)
                 draw_line(mlx->arr_x[y][x], mlx->arr_y[y][x], mlx->arr_x[y][x + 1], mlx->arr_y[y][x], mlx);
-            if (y + 1 <= mlx->rows)
+            if (y + 1 < mlx->rows)
                 draw_line(mlx->arr_x[y][x], mlx->arr_y[y][x], mlx->arr_x[y][x], mlx->arr_y[y + 1][x], mlx);
             x++;
         }

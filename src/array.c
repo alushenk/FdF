@@ -17,6 +17,12 @@ static int     get_nums_count(char *str)
             result++;
         while (ft_isdigit(*str))
             str++;
+        if (*str == ',')
+        {
+            str++;
+            while(ft_isxdigit(*str))
+                str++;
+        }
     }
     return (result);
 }
