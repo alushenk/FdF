@@ -72,8 +72,8 @@ static void    draw_map(t_struct *mlx)
                 draw_line(mlx->arr_x[y][x], mlx->arr_y[y][x], mlx->arr_x[y][x + 1], mlx->arr_y[y][x + 1], mlx);
             if (y + 1 < mlx->rows)
                 draw_line(mlx->arr_x[y][x], mlx->arr_y[y][x], mlx->arr_x[y + 1][x], mlx->arr_y[y + 1][x], mlx);
-            //if (x + 1 < mlx->cols && y + 1 < mlx->rows)
-            //    draw_line(mlx->arr_x[y][x], mlx->arr_y[y][x], mlx->arr_x[y][x + 1], mlx->arr_y[y + 1][x], mlx);
+            if (x + 1 < mlx->cols && y + 1 < mlx->rows)
+                draw_line(mlx->arr_x[y][x], mlx->arr_y[y][x], mlx->arr_x[y][x + 1], mlx->arr_y[y + 1][x], mlx);
             x++;
         }
         y++;
@@ -86,11 +86,7 @@ void    draw(t_struct *mlx)
         mlx_destroy_image(mlx->init, mlx->image);
     mlx->image = mlx_new_image(mlx->init, WINDOW_SIZE_X, WINDOW_SIZE_Y);
     mlx->image_data = mlx_get_data_addr(mlx->image, &mlx->bits_per_pixel, &mlx->line_size, &mlx->endian);
-
-    //центровку и сайз надо делать где-то снаружи, один раз
     prepare_matrix(mlx);
     draw_map(mlx);
-    draw_line(mlx->arr_x[0][0], mlx->arr_y[0][0], mlx->arr_x[mlx->rows-1][mlx->cols-1], mlx->arr_y[mlx->rows-1][mlx->cols-1], mlx);
-    //draw_line(mlx->arr_x[y][x], mlx->arr_y[y][x], mlx->arr_x[y][x + 1], mlx->arr_y[y][x], mlx);
     mlx_put_image_to_window(mlx->init, mlx->window, mlx->image, 0, 0);
 }

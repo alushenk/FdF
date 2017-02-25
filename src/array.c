@@ -17,12 +17,8 @@ static int     get_nums_count(char *str)
             result++;
         while (ft_isdigit(*str))
             str++;
-        if (*str == ',')
-        {
+        while(*str != ' ' && *str)
             str++;
-            while(ft_isxdigit(*str))
-                str++;
-        }
     }
     return (result);
 }
@@ -84,6 +80,10 @@ static void    mas_fill(char *path, t_struct *mas)
             mas->arr_z[i][j] = atoi_skip(&tmp);
             mas->arr_x[i][j] = j;
             mas->arr_y[i][j] = i;
+            if (ft_strncmp(tmp, ",0x", 3) == 0)
+            {
+                tmp += 3;
+            }
             j++;
         }
         free(line);

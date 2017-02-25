@@ -7,6 +7,7 @@
 
 # include <math.h>
 # include <mlx.h>
+//# include <X11/X.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
@@ -48,6 +49,7 @@ typedef struct      s_struct
     double **arr_x;
     double **arr_y;
     double **arr_z;
+    int     **color;
 
     void    *init;
     void    *window;
