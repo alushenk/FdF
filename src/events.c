@@ -60,10 +60,21 @@ int    key_hook(int key, t_struct *mlx)
     }
     else if (key == KEY_ROTATE_Z_RIGHT)
     {
-        rotate_z(mlx, mlx->rows, mlx->cols);
+        move_matrix(mlx->arr_x, mlx->rows, mlx->cols, -old_centre_x);
+        move_matrix(mlx->arr_y, mlx->rows, mlx->cols, -old_centre_y);
+        rotate_z(mlx, mlx->rows, mlx->cols, 1);
+        move_matrix(mlx->arr_x, mlx->rows, mlx->cols, old_centre_x);
+        move_matrix(mlx->arr_y, mlx->rows, mlx->cols, old_centre_y);
+        draw(mlx);
     }
     else if (key == KEY_ROTATE_Z_LEFT)
     {
+        move_matrix(mlx->arr_x, mlx->rows, mlx->cols, -old_centre_x);
+        move_matrix(mlx->arr_y, mlx->rows, mlx->cols, -old_centre_y);
+        rotate_z(mlx, mlx->rows, mlx->cols, -1);
+        move_matrix(mlx->arr_x, mlx->rows, mlx->cols, old_centre_x);
+        move_matrix(mlx->arr_y, mlx->rows, mlx->cols, old_centre_y);
+        draw(mlx);
     }
     else if (key == 88)
     {

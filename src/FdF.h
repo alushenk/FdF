@@ -13,8 +13,10 @@
 # include "../externals/get_next_line/get_next_line.h"
 # include "../externals/libft/libft.h"
 
-# define WINDOW_SIZE_X 900
-# define WINDOW_SIZE_Y 600
+# define WINDOW_SIZE_X 1500
+# define WINDOW_SIZE_Y 1000
+
+# define RAD (3.14 / 180)
 
 #define KEY_LEFT 123
 #define KEY_RIGHT 124
@@ -26,8 +28,6 @@
 #define KEY_ROTATE_Z_RIGHT 85
 #define KEY_ROTATE_Z_LEFT 83
 
-#define ANGLE 45
-
 typedef struct      s_struct
 {
     int cols;
@@ -36,6 +36,8 @@ typedef struct      s_struct
     double zoom;
     double center_x;
     double center_y;
+    double min_x;
+    double min_y;
     int angle;
 
 
@@ -71,7 +73,8 @@ void    prepare_matrix(t_struct *mlx);
 void    move_matrix(double **arr, int rows, int cols, double move);
 void    find_centre(t_struct *mlx);
 void    zoom_matrix(double **arr, int rows, int cols, double multiplier);
-void    rotate_z(t_struct *mlx, int rows, int cols);
+void    rotate_z(t_struct *mlx, int rows, int cols, int angle);
+void    rotate_z_1(t_struct *mlx, int rows, int cols, int angle);
 
 
 
