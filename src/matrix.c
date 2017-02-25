@@ -71,25 +71,42 @@ void    find_centre(t_struct *mlx)
         }
         i++;
     }
+    mlx->center_x = min_x_figure + (max_x_figure - min_x_figure) / 2;
+    mlx->center_y = min_y_figure + (max_y_figure - min_y_figure) / 2;
+}
 
-    mlx->center_x = WINDOW_SIZE_X / 2 - (max_x_figure - min_x_figure) / 2;
-    mlx->center_y = WINDOW_SIZE_Y / 2 - (max_y_figure - min_y_figure) / 2;
+void    rotate_z(t_struct *mlx, int rows, int cols)
+{
+    double x;
+    double y;
+    int i;
+    int j;
+
+    i = 0;
+    while (i < rows)
+    {
+        j = 0;
+        while (j < cols)
+        {
+            mlx->arr_x[i][j] = mlx->arr_x[i][j] * cos(ANGLE) - mlx->arr_y[i][j] * sin(ANGLE);
+            mlx->arr_y[i][j] = mlx->arr_x[i][j] * sin(ANGLE) + mlx->arr_y[i][j] * cos(ANGLE);
+            j++;
+        }
+        i++;
+    }
 }
 
 void    prepare_matrix(t_struct *mlx)
 {
-    if (mlx->center_x == 0 && mlx->center_y == 0)
-        find_centre(mlx);
-    else
-    {
-        move_matrix(mlx->arr_x, mlx->rows, mlx->cols, -mlx->center_x);
-        move_matrix(mlx->arr_y, mlx->rows, mlx->cols, -mlx->center_y);
-    }
-    zoom_matrix(mlx->arr_x, mlx->rows, mlx->cols, mlx->zoom);
-    zoom_matrix(mlx->arr_y, mlx->rows, mlx->cols, mlx->zoom);
-    zoom_matrix(mlx->arr_z, mlx->rows, mlx->cols, mlx->zoom);
-    find_centre(mlx);
-    move_matrix(mlx->arr_x, mlx->rows, mlx->cols, mlx->center_x);
-    move_matrix(mlx->arr_y, mlx->rows, mlx->cols, mlx->center_y);
+    double window_centre_x;
+    double window_centre_y;
 
+    if (mlx->center_x == 0 && mlx->center_y == 0)
+    {
+        window_centre_x = WINDOW_SIZE_X / 2;
+        window_centre_y = WINDOW_SIZE_Y / 2;
+        find_centre(mlx);
+        move_matrix(mlx->arr_x, mlx->rows, mlx->cols, window_centre_x - mlx->center_x);
+        move_matrix(mlx->arr_y, mlx->rows, mlx->cols, window_centre_y - mlx->center_y);
+    }
 }

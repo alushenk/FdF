@@ -26,6 +26,8 @@
 #define KEY_ROTATE_Z_RIGHT 85
 #define KEY_ROTATE_Z_LEFT 83
 
+#define ANGLE 45
+
 typedef struct      s_struct
 {
     int cols;
@@ -66,6 +68,10 @@ int    key_hook(int key, t_struct *mlx);
 ** matrix.c
 */
 void    prepare_matrix(t_struct *mlx);
+void    move_matrix(double **arr, int rows, int cols, double move);
+void    find_centre(t_struct *mlx);
+void    zoom_matrix(double **arr, int rows, int cols, double multiplier);
+void    rotate_z(t_struct *mlx, int rows, int cols);
 
 
 
