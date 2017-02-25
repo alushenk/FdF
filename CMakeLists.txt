@@ -10,7 +10,7 @@ set(MACOS_FLAGS "-lmlx -framework OpenGL -framework AppKit")
 set(CMAKE_C_FLAGS ${MACOS_FLAGS})
 
 #file(GLOB SOURCE_FILES src/*.c)
-set(SOURCE_FILES src/main.c src/array.c src/draw.c src/events.c src/matrix.c)
+set(SOURCE_FILES src/main.c src/array.c src/draw.c src/events.c src/matrix.c src/rotate.c)
 add_executable(FdF ${SOURCE_FILES} ${GET_NEXT_LINE_PATH}/get_next_line.c)
 
 file(GLOB SOURCES_LIB ${LIB_PATH}/*.c)

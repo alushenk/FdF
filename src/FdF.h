@@ -25,6 +25,11 @@
 #define KEY_SCALE_INCREASE 69
 #define KEY_SCALE_DECREASE 78
 #define KEY_EXIT 53
+
+#define KEY_ROTATE_X_RIGHT 91
+#define KEY_ROTATE_X_LEFT 84
+#define KEY_ROTATE_Y_RIGHT 88
+#define KEY_ROTATE_Y_LEFT 86
 #define KEY_ROTATE_Z_RIGHT 85
 #define KEY_ROTATE_Z_LEFT 83
 
@@ -36,8 +41,7 @@ typedef struct      s_struct
     double zoom;
     double center_x;
     double center_y;
-    double min_x;
-    double min_y;
+    double center_z;
     int angle;
 
 
@@ -73,9 +77,12 @@ void    prepare_matrix(t_struct *mlx);
 void    move_matrix(double **arr, int rows, int cols, double move);
 void    find_centre(t_struct *mlx);
 void    zoom_matrix(double **arr, int rows, int cols, double multiplier);
+/*
+** rotate.c
+*/
+void    rotate_x(t_struct *mlx, int rows, int cols, int angle);
+void    rotate_y(t_struct *mlx, int rows, int cols, int angle);
 void    rotate_z(t_struct *mlx, int rows, int cols, int angle);
-void    rotate_z_1(t_struct *mlx, int rows, int cols, int angle);
-
 
 
 void    print_mlx(double **arr, int rows, int cols);
