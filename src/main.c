@@ -36,6 +36,11 @@ static void    struct_init(t_struct **mlx)
     (*mlx)->angle = 0;
 }
 
+int exit_button()
+{
+    exit(0);
+}
+
 int main(int argc, char **argv)
 {
     t_struct *mlx;
@@ -58,7 +63,8 @@ int main(int argc, char **argv)
 
         draw(mlx);
 
-        mlx_key_hook(mlx->window, key_hook, mlx);
+        mlx_hook(mlx->window, 2, 5, key_hook, mlx);
+        mlx_hook(mlx->window, 17, 0L, exit_button, 0);
         //mlx_mouse_hook(mlx->window, print_mouse, mlx);
         mlx_loop(mlx->init);
     }
