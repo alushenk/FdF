@@ -93,9 +93,9 @@ void    prepare_matrix(t_struct *mlx)
     {
         window_centre_x = WINDOW_SIZE_X / 2;
         window_centre_y = WINDOW_SIZE_Y / 2;
-        zoom_matrix(mlx->arr_x, mlx->rows, mlx->cols, mlx->zoom);
-        zoom_matrix(mlx->arr_y, mlx->rows, mlx->cols, mlx->zoom);
-        zoom_matrix(mlx->arr_z, mlx->rows, mlx->cols, mlx->zoom);
+        zoom_matrix(mlx->arr_x, mlx->rows, mlx->cols, STEP_ZOOM_INCREASE);
+        zoom_matrix(mlx->arr_y, mlx->rows, mlx->cols, STEP_ZOOM_INCREASE);
+        zoom_matrix(mlx->arr_z, mlx->rows, mlx->cols, STEP_ZOOM_INCREASE);
         find_centre(mlx);
         move_matrix(mlx->arr_x, mlx->rows, mlx->cols, window_centre_x - mlx->center_x);
         move_matrix(mlx->arr_y, mlx->rows, mlx->cols, window_centre_y - mlx->center_y);

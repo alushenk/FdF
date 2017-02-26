@@ -43,17 +43,11 @@ typedef struct      s_struct
     int cols;
     int rows;
 
-    double zoom;
     double center_x;
     double center_y;
     double center_z;
-    int angle;
 
-
-    double **arr_x;
-    double **arr_y;
-    double **arr_z;
-    int     **color;
+    t_pixel *pixel;
 
     void    *init;
     void    *window;
@@ -70,6 +64,8 @@ typedef struct      s_pixel
     double  y;
     double  z;
     int     color;
+    struct s_pixel  *right;
+    struct s_pixel  *down;
 }                   t_pixel;
 
 /*

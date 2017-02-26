@@ -16,10 +16,9 @@ int    key_hook(int key, t_struct *mlx)
     old_centre_z = mlx->center_z;
     if (key == KEY_SCALE_INCREASE)
     {
-        mlx->zoom = STEP_ZOOM_INCREASE;
-        zoom_matrix(mlx->arr_x, mlx->rows, mlx->cols, mlx->zoom);
-        zoom_matrix(mlx->arr_y, mlx->rows, mlx->cols, mlx->zoom);
-        zoom_matrix(mlx->arr_z, mlx->rows, mlx->cols, mlx->zoom);
+        zoom_matrix(mlx->arr_x, mlx->rows, mlx->cols, STEP_ZOOM_INCREASE);
+        zoom_matrix(mlx->arr_y, mlx->rows, mlx->cols, STEP_ZOOM_INCREASE);
+        zoom_matrix(mlx->arr_z, mlx->rows, mlx->cols, STEP_ZOOM_INCREASE);
         find_centre(mlx);
         move_matrix(mlx->arr_x, mlx->rows, mlx->cols, old_centre_x - mlx->center_x);
         move_matrix(mlx->arr_y, mlx->rows, mlx->cols, old_centre_y - mlx->center_y);
@@ -27,10 +26,9 @@ int    key_hook(int key, t_struct *mlx)
     }
     else if (key == KEY_SCALE_DECREASE)
     {
-        mlx->zoom = STEP_ZOOM_DECREASE;
-        zoom_matrix(mlx->arr_x, mlx->rows, mlx->cols, mlx->zoom);
-        zoom_matrix(mlx->arr_y, mlx->rows, mlx->cols, mlx->zoom);
-        zoom_matrix(mlx->arr_z, mlx->rows, mlx->cols, mlx->zoom);
+        zoom_matrix(mlx->arr_x, mlx->rows, mlx->cols, STEP_ZOOM_DECREASE);
+        zoom_matrix(mlx->arr_y, mlx->rows, mlx->cols, STEP_ZOOM_DECREASE);
+        zoom_matrix(mlx->arr_z, mlx->rows, mlx->cols, STEP_ZOOM_DECREASE);
         find_centre(mlx);
         move_matrix(mlx->arr_x, mlx->rows, mlx->cols, old_centre_x - mlx->center_x);
         move_matrix(mlx->arr_y, mlx->rows, mlx->cols, old_centre_y - mlx->center_y);

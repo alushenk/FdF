@@ -4,63 +4,17 @@
 
 #include "FdF.h"
 
-static int     get_nums_count(char *str)
+t_pixel     *new_pixel(int x, int y, int z, int color)
 {
-    int result;
+    t_pixel *result;
 
-    result = 0;
-    if (str == NULL)
-        return (0);
-    while(*str)
-    {
-        while (*str == ' ')
-            str++;
-        if (ft_isdigit(*str))
-            result++;
-        while (ft_isdigit(*str))
-            str++;
-        while(*str != ' ' && *str)
-            str++;
-    }
-    return (result);
-}
-
-static void    mas_get_size(char *path, t_struct *mas)
-{
-    int fd;
-    char *line;
-
-    fd = open(path, O_RDONLY);
-    mas->rows = 0;
-    mas->cols = 0;
-    while (get_next_line(fd, &line) == 1)
-    {
-        if (mas->cols == 0)
-            mas->cols = get_nums_count(line);
-        if (mas->cols != get_nums_count(line))
-        {
-            printf("error");
-            exit(0);
-        }
-        mas->rows++;
-        free(line);
-    }
-    close(fd);
-}
-
-static void    mas_create(double ***arr, int rows, int cols)
-{
-    double **result;
-    int i;
-
-    result = (double**)malloc(sizeof(double*) * rows);
-    i = 0;
-    while (i < rows)
-    {
-        result[i] = (double*)malloc(sizeof(double) * cols);
-        i++;
-    }
-    *arr = result;
+    result = (t_pixel*)malloc(sizeof(t_pixel));
+    result->x = x;
+    result->y = y;
+    result->z = z;
+    result->color = color;
+    result->right = NULL;
+    result->down = NULL;
 }
 
 int hex_to_int(char **hex)
@@ -84,55 +38,63 @@ int hex_to_int(char **hex)
     return ((int)result);
 }
 
-static void    mas_fill(char *path, t_struct *mas)
+static int     get_row(char *str, t_pixel *pixel, int y)
+{
+    int result;
+
+    result = 0;
+    if (str == NULL)
+        return (0);
+    while(*str)
+    {
+        while (*str == ' ')
+            str++;
+        pixel->x = result;
+        pixel->y = y;
+        if (ft_isdigit(*str))
+        {
+            result++;
+            pixel->z = atoi_skip(&str);
+        }
+        if (ft_strncmp(str, ",0x", 3) == 0)
+        {
+            str += 3;
+            pixel->color = hex_to_int(&str);
+        }
+        pixel = pixel->right;
+        pixel = (t_pixel*)malloc(sizeof(t_pixel));
+    }
+    return (result);
+}
+
+static void    mas_fill(char *path, t_struct *mlx)
 {
     int     fd;
     char    *line;
-    char    *tmp;
-    int     i;
-    int     j;
+    t_pixel *pixel;
+    int     cols;
 
+    mlx->pixel = (t_pixel*)malloc(sizeof(t_pixel));
+    pixel = mlx->pixel;
     fd = open(path, O_RDONLY);
-    i = 0;
     while (get_next_line(fd, &line))
     {
-        tmp = line;
-        j = 0;
-        while (*tmp)
+        cols = get_row(line, pixel, mlx->rows);
+        if (mlx->cols == 0)
+            mlx->cols = cols;
+        if (mlx->cols != cols)
         {
-            mas->arr_z[i][j] = atoi_skip(&tmp);
-            mas->arr_x[i][j] = j;
-            mas->arr_y[i][j] = i;
-            if (ft_strncmp(tmp, ",0x", 3) == 0)
-            {
-                tmp += 3;
-                mas->color[i][j] = hex_to_int(&tmp);
-            }
-            j++;
+            printf("error");
+            exit(0);
         }
         free(line);
-        i++;
+        mlx->rows++;
+        pixel = pixel->down;
     }
     close(fd);
 }
 
 void    parse_file(char *path, t_struct *mlx)
 {
-    int     **mas_color;
-    size_t  i;
-
-    mas_get_size(path, mlx);
-    mas_create(&mlx->arr_x, mlx->rows, mlx->cols);
-    mas_create(&mlx->arr_y, mlx->rows, mlx->cols);
-    mas_create(&mlx->arr_z, mlx->rows, mlx->cols);
-
-    mas_color = (int**)malloc(sizeof(int*) * mlx->rows);
-    i = 0;
-    while (i < mlx->rows)
-    {
-        mas_color[i] = (int*)malloc(sizeof(int) * mlx->cols);
-        i++;
-    }
-    mlx->color = mas_color;
     mas_fill(path, mlx);
 }
