@@ -32,6 +32,7 @@ static void    struct_init(t_struct **mlx)
     (*mlx)->image = NULL;
     (*mlx)->center_x = 0;
     (*mlx)->center_y = 0;
+    (*mlx)->center_z = 0;
     (*mlx)->cols = 0;
     (*mlx)->rows = 0;
 

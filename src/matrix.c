@@ -4,84 +4,78 @@
 
 #include "FdF.h"
 
-void    zoom_matrix(double **arr, int rows, int cols, double multiplier)
+void    zoom_matrix(t_pixel *pixel, double multiplier)
 {
-    int i;
-    int j;
-
-    i = 0;
-    while (i < rows)
+    while (pixel->down)
     {
-        j = 0;
-        while (j < cols)
+        while (pixel->right)
         {
-            arr[i][j] *= multiplier;
-            j++;
+            pixel->x *= multiplier;
+            pixel->y *= multiplier;
+            pixel->z *= multiplier;
+            pixel = pixel->right;
         }
-        i++;
+        pixel = pixel->down;
     }
 }
 
-void    move_matrix(double **arr, int rows, int cols, double move)
+void    move_matrix(t_pixel *pixel, double move, int x, int y, int z)
 {
-    int i;
-    int j;
-
-    i = 0;
-    while (i < rows)
+    while (pixel->down)
     {
-        j = 0;
-        while (j < cols)
+        while (pixel->right)
         {
-            arr[i][j] += move;
-            j++;
+            if (x)
+                pixel->x += move;
+            if (y)
+                pixel->y += move;
+            if (z)
+                pixel->z += move;
+            pixel = pixel->right;
         }
-        i++;
+        pixel = pixel->down;
     }
 }
 
 void    find_centre(t_struct *mlx)
 {
-    double max_x_figure;
-    double max_y_figure;
-    double max_z_figure;
-    double min_x_figure;
-    double min_y_figure;
-    double min_z_figure;
-    int i;
-    int j;
+    double max_x;
+    double max_y;
+    double max_z;
+    t_pixel *y;
+    t_pixel *x;
 
-    i = 0;
-    max_x_figure = mlx->arr_x[0][0];
-    max_y_figure = mlx->arr_y[0][0];
-    max_z_figure = mlx->arr_z[0][0];
-    min_x_figure = mlx->arr_x[0][0];
-    min_y_figure = mlx->arr_y[0][0];
-    min_z_figure = mlx->arr_z[0][0];
-    while (i < mlx->rows)
+    mlx->center_x = y->x;
+    mlx->center_y = y->y;
+    mlx->center_z = y->z;
+    max_x = y->x;
+    max_y = y->y;
+    max_z = y->z;
+    y = mlx->pixel;
+    while (y->down)
     {
-        j = 0;
-        while (j < mlx->cols)
+        x = y;
+        while (x->right)
         {
-            if (mlx->arr_x[i][j] > max_x_figure)
-                max_x_figure = mlx->arr_x[i][j];
-            if (mlx->arr_x[i][j] < min_x_figure)
-                min_x_figure = mlx->arr_x[i][j];
-            if (mlx->arr_y[i][j] > max_y_figure)
-                max_y_figure = mlx->arr_y[i][j];
-            if (mlx->arr_y[i][j] < min_y_figure)
-                min_y_figure = mlx->arr_y[i][j];
-            if (mlx->arr_z[i][j] > max_z_figure)
-                max_z_figure = mlx->arr_z[i][j];
-            if (mlx->arr_z[i][j] < min_z_figure)
-                min_z_figure = mlx->arr_z[i][j];
-            j++;
+            if (x->x > max_x)
+                max_x = x->x;
+            if (x->x < mlx->center_x)
+                mlx->center_x = x->x;
+            if (x->y > max_y)
+                max_y = x->y;
+            if (x->y < mlx->center_y)
+                mlx->center_y = x->y;
+            if (x->z > max_z)
+                max_z = x->z;
+            if (x->z < mlx->center_z)
+                mlx->center_z = x->z;
+            x = x->right;
         }
-        i++;
+        y = y->down;
     }
-    mlx->center_x = min_x_figure + (max_x_figure - min_x_figure) / 2;
-    mlx->center_y = min_y_figure + (max_y_figure - min_y_figure) / 2;
-    mlx->center_z = min_z_figure + (max_z_figure - min_z_figure) / 2;
+    mlx->center_x = mlx->center_x + (max_x - mlx->center_x) / 2;
+    mlx->center_y = mlx->center_y + (max_y - mlx->center_y) / 2;
+    mlx->center_z = mlx->center_z + (max_z - mlx->center_z) / 2;
 }
 
 void    prepare_matrix(t_struct *mlx)
@@ -93,11 +87,9 @@ void    prepare_matrix(t_struct *mlx)
     {
         window_centre_x = WINDOW_SIZE_X / 2;
         window_centre_y = WINDOW_SIZE_Y / 2;
-        zoom_matrix(mlx->arr_x, mlx->rows, mlx->cols, STEP_ZOOM_INCREASE);
-        zoom_matrix(mlx->arr_y, mlx->rows, mlx->cols, STEP_ZOOM_INCREASE);
-        zoom_matrix(mlx->arr_z, mlx->rows, mlx->cols, STEP_ZOOM_INCREASE);
+        zoom_matrix(mlx->pixel, STEP_ZOOM_INCREASE);
         find_centre(mlx);
-        move_matrix(mlx->arr_x, mlx->rows, mlx->cols, window_centre_x - mlx->center_x);
-        move_matrix(mlx->arr_y, mlx->rows, mlx->cols, window_centre_y - mlx->center_y);
+        move_matrix(mlx->pixel, window_centre_x - mlx->center_x, 1, 0, 0);
+        move_matrix(mlx->pixel, window_centre_y - mlx->center_y, 0, 1, 0);
     }
 }

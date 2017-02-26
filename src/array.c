@@ -47,6 +47,13 @@ static int     get_row(char *str, t_pixel *pixel, int y)
         return (0);
     while(*str)
     {
+        if (pixel == NULL)
+            pixel = (t_pixel*)malloc(sizeof(t_pixel));
+        else
+        {
+            pixel->right = (t_pixel*)malloc(sizeof(t_pixel));
+            pixel = pixel->right;
+        }
         while (*str == ' ')
             str++;
         pixel->x = result;
@@ -61,13 +68,12 @@ static int     get_row(char *str, t_pixel *pixel, int y)
             str += 3;
             pixel->color = hex_to_int(&str);
         }
-        pixel = pixel->right;
-        pixel = (t_pixel*)malloc(sizeof(t_pixel));
+        pixel->right = NULL;
     }
     return (result);
 }
 
-static void    mas_fill(char *path, t_struct *mlx)
+static void    parse_file(char *path, t_struct *mlx)
 {
     int     fd;
     char    *line;
@@ -89,12 +95,8 @@ static void    mas_fill(char *path, t_struct *mlx)
         }
         free(line);
         mlx->rows++;
+        pixel->down = (t_pixel*)malloc(sizeof(t_pixel));
         pixel = pixel->down;
     }
     close(fd);
-}
-
-void    parse_file(char *path, t_struct *mlx)
-{
-    mas_fill(path, mlx);
 }

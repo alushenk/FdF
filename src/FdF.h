@@ -84,9 +84,6 @@ int    key_hook(int key, t_struct *mlx);
 ** matrix.c
 */
 void    prepare_matrix(t_struct *mlx);
-void    move_matrix(double **arr, int rows, int cols, double move);
-void    find_centre(t_struct *mlx);
-void    zoom_matrix(double **arr, int rows, int cols, double multiplier);
 /*
 ** rotate.c
 */
