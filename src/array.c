@@ -9,9 +9,11 @@ static int     get_nums_count(char *str)
     int result;
 
     result = 0;
+    if (str == NULL)
+        return (0);
     while(*str)
     {
-        while (ft_isspace(*str))
+        while (*str == ' ')
             str++;
         if (ft_isdigit(*str))
             result++;
@@ -31,7 +33,7 @@ static void    mas_get_size(char *path, t_struct *mas)
     fd = open(path, O_RDONLY);
     mas->rows = 0;
     mas->cols = 0;
-    while (get_next_line(fd, &line))
+    while (get_next_line(fd, &line) == 1)
     {
         if (mas->cols == 0)
             mas->cols = get_nums_count(line);
@@ -61,6 +63,26 @@ static void    mas_create(double ***arr, int rows, int cols)
     *arr = result;
 }
 
+int hex_to_int(char *hex, int len)
+{
+    size_t result;
+    char byte;
+
+    result = 0;
+    while (*hex && len--)
+    {
+        byte = *hex++;
+        if (ft_isdigit(byte))
+            byte -= '0';
+        else if (ft_islower(byte))
+            byte = byte - 'a' + 10;
+        else if (ft_isupper(byte))
+            byte = byte - 'A' + 10;
+        result = (result << 4) | (byte & 0xF);
+    }
+    return ((int)result);
+}
+
 static void    mas_fill(char *path, t_struct *mas)
 {
     int     fd;
@@ -83,6 +105,8 @@ static void    mas_fill(char *path, t_struct *mas)
             if (ft_strncmp(tmp, ",0x", 3) == 0)
             {
                 tmp += 3;
+                mas->color[i][j] = hex_to_int(tmp, 6);
+                tmp += 6;
             }
             j++;
         }
@@ -94,9 +118,21 @@ static void    mas_fill(char *path, t_struct *mas)
 
 void    parse_file(char *path, t_struct *mlx)
 {
+    int     **mas_color;
+    size_t  i;
+
     mas_get_size(path, mlx);
     mas_create(&mlx->arr_x, mlx->rows, mlx->cols);
     mas_create(&mlx->arr_y, mlx->rows, mlx->cols);
     mas_create(&mlx->arr_z, mlx->rows, mlx->cols);
+
+    mas_color = (int**)malloc(sizeof(int*) * mlx->rows);
+    i = 0;
+    while (i < mlx->rows)
+    {
+        mas_color[i] = (int*)malloc(sizeof(int) * mlx->cols);
+        i++;
+    }
+    mlx->color = mas_color;
     mas_fill(path, mlx);
 }

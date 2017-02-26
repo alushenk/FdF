@@ -64,7 +64,7 @@ int    key_hook(int key, t_struct *mlx)
     {
         move_matrix(mlx->arr_y, mlx->rows, mlx->cols, -old_centre_y);
         move_matrix(mlx->arr_z, mlx->rows, mlx->cols, -old_centre_z);
-        rotate_x(mlx, mlx->rows, mlx->cols, -1);
+        rotate_x(mlx, mlx->rows, mlx->cols, -2);
         move_matrix(mlx->arr_y, mlx->rows, mlx->cols, old_centre_y);
         move_matrix(mlx->arr_z, mlx->rows, mlx->cols, old_centre_z);
         draw(mlx);
@@ -73,7 +73,7 @@ int    key_hook(int key, t_struct *mlx)
     {
         move_matrix(mlx->arr_y, mlx->rows, mlx->cols, -old_centre_y);
         move_matrix(mlx->arr_z, mlx->rows, mlx->cols, -old_centre_z);
-        rotate_x(mlx, mlx->rows, mlx->cols, 1);
+        rotate_x(mlx, mlx->rows, mlx->cols, 2);
         move_matrix(mlx->arr_y, mlx->rows, mlx->cols, old_centre_y);
         move_matrix(mlx->arr_z, mlx->rows, mlx->cols, old_centre_z);
         draw(mlx);
@@ -82,7 +82,7 @@ int    key_hook(int key, t_struct *mlx)
     {
         move_matrix(mlx->arr_x, mlx->rows, mlx->cols, -old_centre_x);
         move_matrix(mlx->arr_z, mlx->rows, mlx->cols, -old_centre_z);
-        rotate_y(mlx, mlx->rows, mlx->cols, -1);
+        rotate_y(mlx, mlx->rows, mlx->cols, -2);
         move_matrix(mlx->arr_x, mlx->rows, mlx->cols, old_centre_x);
         move_matrix(mlx->arr_z, mlx->rows, mlx->cols, old_centre_z);
         draw(mlx);
@@ -91,7 +91,7 @@ int    key_hook(int key, t_struct *mlx)
     {
         move_matrix(mlx->arr_x, mlx->rows, mlx->cols, -old_centre_x);
         move_matrix(mlx->arr_z, mlx->rows, mlx->cols, -old_centre_z);
-        rotate_y(mlx, mlx->rows, mlx->cols, 1);
+        rotate_y(mlx, mlx->rows, mlx->cols, 2);
         move_matrix(mlx->arr_x, mlx->rows, mlx->cols, old_centre_x);
         move_matrix(mlx->arr_z, mlx->rows, mlx->cols, old_centre_z);
         draw(mlx);
@@ -100,7 +100,7 @@ int    key_hook(int key, t_struct *mlx)
     {
         move_matrix(mlx->arr_x, mlx->rows, mlx->cols, -old_centre_x);
         move_matrix(mlx->arr_y, mlx->rows, mlx->cols, -old_centre_y);
-        rotate_z(mlx, mlx->rows, mlx->cols, 1);
+        rotate_z(mlx, mlx->rows, mlx->cols, 2);
         move_matrix(mlx->arr_x, mlx->rows, mlx->cols, old_centre_x);
         move_matrix(mlx->arr_y, mlx->rows, mlx->cols, old_centre_y);
         draw(mlx);
@@ -110,7 +110,7 @@ int    key_hook(int key, t_struct *mlx)
     {
         move_matrix(mlx->arr_x, mlx->rows, mlx->cols, -old_centre_x);
         move_matrix(mlx->arr_y, mlx->rows, mlx->cols, -old_centre_y);
-        rotate_z(mlx, mlx->rows, mlx->cols, -1);
+        rotate_z(mlx, mlx->rows, mlx->cols, -2);
         move_matrix(mlx->arr_x, mlx->rows, mlx->cols, old_centre_x);
         move_matrix(mlx->arr_y, mlx->rows, mlx->cols, old_centre_y);
         draw(mlx);

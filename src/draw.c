@@ -72,8 +72,8 @@ static void    draw_map(t_struct *mlx)
                 draw_line(mlx->arr_x[y][x], mlx->arr_y[y][x], mlx->arr_x[y][x + 1], mlx->arr_y[y][x + 1], mlx);
             if (y + 1 < mlx->rows)
                 draw_line(mlx->arr_x[y][x], mlx->arr_y[y][x], mlx->arr_x[y + 1][x], mlx->arr_y[y + 1][x], mlx);
-            if (x + 1 < mlx->cols && y + 1 < mlx->rows)
-                draw_line(mlx->arr_x[y][x], mlx->arr_y[y][x], mlx->arr_x[y][x + 1], mlx->arr_y[y + 1][x], mlx);
+            //if (x + 1 < mlx->cols && y + 1 < mlx->rows)
+            //    draw_line(mlx->arr_x[y][x], mlx->arr_y[y][x], mlx->arr_x[y][x + 1], mlx->arr_y[y + 1][x], mlx);
             x++;
         }
         y++;
