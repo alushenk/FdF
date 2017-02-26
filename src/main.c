@@ -4,23 +4,50 @@
 
 #include "FdF.h"
 
-void    print_mlx(double **arr, int rows, int cols)
+void    print_mlx(t_pixel *pixel)
 {
-    int i;
-    int j;
+    t_pixel *x;
+    t_pixel *y;
 
-    i = 0;
-    while (i < rows)
+    y = pixel;
+    while (y->down)
     {
-        j = 0;
-        while (j < cols)
+        x = y;
+        while (x->right)
         {
-            printf("%-15f", arr[i][j]);
-            j++;
+            printf("%-15f", x->x);
+            x = x->right;
         }
-        i++;
         printf("\n");
+        y = y->down;
     }
+    printf("\n");
+    y = pixel;
+    while (y->down)
+    {
+        x = y;
+        while (x->right)
+        {
+            printf("%-15f", x->y);
+            x = x->right;
+        }
+        printf("\n");
+        y = y->down;
+    }
+    printf("\n");
+    y = pixel;
+    while (y->down)
+    {
+        x = y;
+        while (x->right)
+        {
+            printf("%-15f", x->z);
+            x = x->right;
+        }
+        printf("\n");
+        y = y->down;
+    }
+    printf("\n");
 }
 
 static void    struct_init(t_struct **mlx)
@@ -63,6 +90,7 @@ int main(int argc, char **argv)
         printf("\n");
         */
 
+        print_mlx(mlx->pixel);
         draw(mlx);
 
         mlx_hook(mlx->window, 2, 5, key_hook, mlx);

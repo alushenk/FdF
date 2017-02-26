@@ -4,7 +4,7 @@
 
 #include "FdF.h"
 
-static void    write_pixel(double x, double y, int color, t_struct *mlx)
+static void    write_pixel(int x, int y, int color, t_struct *mlx)
 {
     int a;
 
@@ -34,14 +34,14 @@ static void    draw_line(t_pixel *start, t_pixel *end, t_struct *mlx)
 
     move_x = start->x < end->x ? 1 : -1;
     move_y = start->y < end->y ? 1 : -1;
-    delta_x = abs(end->x - start->y);
-    delta_y = abs(end->y - start->y);
+    delta_x = (int)fabs(end->x - start->y);
+    delta_y = (int)fabs(end->y - start->y);
     error = delta_x - delta_y;
     x = start->x;
     y = start->y;
     if (in_range(end->x, end->y))
         write_pixel(end->x, end->y, end->color, mlx);
-    while (x != end->x|| y != end->y)
+    while (x != (int)end->x|| y != (int)end->y)
     {
         if (in_range(x, y))
             write_pixel(x, y, end->color, mlx);
@@ -76,7 +76,7 @@ static void    draw_map(t_struct *mlx)
                 draw_line(x, x->down, mlx);
             //if (x + 1 < mlx->cols && y + 1 < mlx->rows)
             //    draw_line(mlx->arr_x[y][x], mlx->arr_y[y][x], mlx->arr_x[y][x + 1], mlx->arr_y[y + 1][x], mlx);
-            x++;
+            x = x->right;
         }
         y = y->down;
     }

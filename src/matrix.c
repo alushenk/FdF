@@ -6,34 +6,44 @@
 
 void    zoom_matrix(t_pixel *pixel, double multiplier)
 {
-    while (pixel->down)
+    t_pixel *x;
+    t_pixel *y;
+
+    y = pixel;
+    while (y->down)
     {
-        while (pixel->right)
+        x = y;
+        while (x->right)
         {
-            pixel->x *= multiplier;
-            pixel->y *= multiplier;
-            pixel->z *= multiplier;
-            pixel = pixel->right;
+            x->x *= multiplier;
+            x->y *= multiplier;
+            x->z *= multiplier;
+            x = x->right;
         }
-        pixel = pixel->down;
+        y = y->down;
     }
 }
 
-void    move_matrix(t_pixel *pixel, double move, int x, int y, int z)
+void    move_matrix(t_pixel *pixel, double move, int a, int b, int c)
 {
-    while (pixel->down)
+    t_pixel *x;
+    t_pixel *y;
+
+    y = pixel;
+    while (y->down)
     {
-        while (pixel->right)
+        x = y;
+        while (x->right)
         {
-            if (x)
-                pixel->x += move;
-            if (y)
-                pixel->y += move;
-            if (z)
-                pixel->z += move;
-            pixel = pixel->right;
+            if (a)
+                x->x += move;
+            if (b)
+                x->y += move;
+            if (c)
+                x->z += move;
+            x = x->right;
         }
-        pixel = pixel->down;
+        y = y->down;
     }
 }
 
@@ -45,12 +55,12 @@ void    find_centre(t_struct *mlx)
     t_pixel *y;
     t_pixel *x;
 
-    mlx->center_x = y->x;
-    mlx->center_y = y->y;
-    mlx->center_z = y->z;
-    max_x = y->x;
-    max_y = y->y;
-    max_z = y->z;
+    mlx->center_x = mlx->pixel->x;
+    mlx->center_y = mlx->pixel->y;
+    mlx->center_z = mlx->pixel->z;
+    max_x = mlx->pixel->x;
+    max_y = mlx->pixel->y;
+    max_z = mlx->pixel->z;
     y = mlx->pixel;
     while (y->down)
     {

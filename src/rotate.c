@@ -4,71 +4,71 @@
 
 #include "FdF.h"
 
-void    rotate_x(t_struct *mlx, int rows, int cols, int angle)
+void    rotate_x(t_pixel *pixel, int angle)
 {
     double y;
     double z;
-    int i;
-    int j;
+    t_pixel *col;
+    t_pixel *row;
 
-    i = 0;
-    while (i < rows)
+    row = pixel;
+    while (row->down)
     {
-        j = 0;
-        while (j < cols)
+        col = row;
+        while (col->right)
         {
-            y = mlx->arr_y[i][j];
-            z = mlx->arr_z[i][j];
-            mlx->arr_y[i][j] = (y * cos(angle * RAD)) - (z * sin(angle * RAD));
-            mlx->arr_z[i][j] = (y * sin(angle * RAD)) + (z * cos(angle * RAD));
-            j++;
+            y = col->y;
+            z = col->z;
+            col->y = (y * cos(angle * RAD)) - (z * sin(angle * RAD));
+            col->z = (y * sin(angle * RAD)) + (z * cos(angle * RAD));
+            col = col->right;
         }
-        i++;
+        row = row->down;
     }
 }
 
-void    rotate_y(t_struct *mlx, int rows, int cols, int angle)
+void    rotate_y(t_pixel *pixel, int angle)
 {
     double x;
     double z;
-    int i;
-    int j;
+    t_pixel *col;
+    t_pixel *row;
 
-    i = 0;
-    while (i < rows)
+    row = pixel;
+    while (row->down)
     {
-        j = 0;
-        while (j < cols)
+        col = row;
+        while (col->right)
         {
-            x = mlx->arr_x[i][j];
-            z = mlx->arr_z[i][j];
-            mlx->arr_x[i][j] = (x * cos(angle * RAD)) - (z * sin(angle * RAD));
-            mlx->arr_z[i][j] = (x * sin(angle * RAD)) + (z * cos(angle * RAD));
-            j++;
+            x = col->x;
+            z = col->z;
+            col->x = (x * cos(angle * RAD)) - (z * sin(angle * RAD));
+            col->z = (x * sin(angle * RAD)) + (z * cos(angle * RAD));
+            col = col->right;
         }
-        i++;
+        row = row->down;
     }
 }
 
-void    rotate_z(t_struct *mlx, int rows, int cols, int angle)
+void    rotate_z(t_pixel *pixel, int angle)
 {
     double x;
     double y;
-    int i;
-    int j;
+    t_pixel *col;
+    t_pixel *row;
 
-    i = 0;
-    while (i < rows)
+    row = pixel;
+    while (row->down)
     {
-        j = 0;
-        while (j < cols)
+        col = row;
+        while (col->right)
         {
-            x = mlx->arr_x[i][j];
-            y = mlx->arr_y[i][j];
-            mlx->arr_x[i][j] = (x * cos(angle * RAD)) - (y * sin(angle * RAD));
-            mlx->arr_y[i][j] = (x * sin(angle * RAD)) + (y * cos(angle * RAD));
-            j++;
+            x = col->x;
+            y = col->y;
+            col->x = (x * cos(angle * RAD)) - (y * sin(angle * RAD));
+            col->y = (x * sin(angle * RAD)) + (y * cos(angle * RAD));
+            col = col->right;
         }
-        i++;
+        row = row->down;
     }
 }

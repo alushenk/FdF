@@ -38,6 +38,16 @@
 #define KEY_ROTATE_Z_RIGHT 85
 #define KEY_ROTATE_Z_LEFT 83
 
+typedef struct      s_pixel
+{
+    double  x;
+    double  y;
+    double  z;
+    int     color;
+    struct s_pixel  *right;
+    struct s_pixel  *down;
+}                   t_pixel;
+
 typedef struct      s_struct
 {
     int cols;
@@ -58,16 +68,6 @@ typedef struct      s_struct
     int     line_size;
 }                   t_struct;
 
-typedef struct      s_pixel
-{
-    double  x;
-    double  y;
-    double  z;
-    int     color;
-    struct s_pixel  *right;
-    struct s_pixel  *down;
-}                   t_pixel;
-
 /*
 ** array.c
 */
@@ -84,14 +84,15 @@ int    key_hook(int key, t_struct *mlx);
 ** matrix.c
 */
 void    prepare_matrix(t_struct *mlx);
+void    find_centre(t_struct *mlx);
+void    move_matrix(t_pixel *pixel, double move, int x, int y, int z);
+void    zoom_matrix(t_pixel *pixel, double multiplier);
 /*
 ** rotate.c
 */
-void    rotate_x(t_struct *mlx, int rows, int cols, int angle);
-void    rotate_y(t_struct *mlx, int rows, int cols, int angle);
-void    rotate_z(t_struct *mlx, int rows, int cols, int angle);
+void    rotate_x(t_pixel *pixel, int angle);
+void    rotate_y(t_pixel *pixel, int angle);
+void    rotate_z(t_pixel *pixel, int angle);
 
-
-void    print_mlx(double **arr, int rows, int cols);
 
 #endif //FDF_FDF_H

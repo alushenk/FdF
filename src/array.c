@@ -4,17 +4,18 @@
 
 #include "FdF.h"
 
-t_pixel     *new_pixel(int x, int y, int z, int color)
+t_pixel     *new_pixel()
 {
     t_pixel *result;
 
     result = (t_pixel*)malloc(sizeof(t_pixel));
-    result->x = x;
-    result->y = y;
-    result->z = z;
-    result->color = color;
+    result->x = 0;
+    result->y = 0;
+    result->z = 0;
+    result->color = 0;
     result->right = NULL;
     result->down = NULL;
+    return (result);
 }
 
 int hex_to_int(char **hex)
@@ -38,7 +39,7 @@ int hex_to_int(char **hex)
     return ((int)result);
 }
 
-static int     get_row(char *str, t_pixel *pixel, int y)
+static int     get_row(char *str, t_pixel *pixel, t_pixel *prev_row, int y)
 {
     int result;
 
@@ -47,13 +48,6 @@ static int     get_row(char *str, t_pixel *pixel, int y)
         return (0);
     while(*str)
     {
-        if (pixel == NULL)
-            pixel = (t_pixel*)malloc(sizeof(t_pixel));
-        else
-        {
-            pixel->right = (t_pixel*)malloc(sizeof(t_pixel));
-            pixel = pixel->right;
-        }
         while (*str == ' ')
             str++;
         pixel->x = result;
@@ -68,34 +62,46 @@ static int     get_row(char *str, t_pixel *pixel, int y)
             str += 3;
             pixel->color = hex_to_int(&str);
         }
-        pixel->right = NULL;
+        if (prev_row && prev_row->right)
+        {
+            prev_row = prev_row->right;
+            pixel->right = prev_row->down;
+        }
+        else
+            pixel->right = new_pixel();
+        pixel->down = new_pixel();
+        pixel = pixel->right;
+        while (*str && !ft_isdigit(*str))
+            str++;
     }
     return (result);
 }
 
-static void    parse_file(char *path, t_struct *mlx)
+void    parse_file(char *path, t_struct *mlx)
 {
     int     fd;
     char    *line;
     t_pixel *pixel;
-    int     cols;
+    t_pixel *prev_row;
+    int     len;
 
-    mlx->pixel = (t_pixel*)malloc(sizeof(t_pixel));
+    mlx->pixel = new_pixel();
     pixel = mlx->pixel;
+    prev_row = NULL;
     fd = open(path, O_RDONLY);
     while (get_next_line(fd, &line))
     {
-        cols = get_row(line, pixel, mlx->rows);
+        len = get_row(line, pixel, prev_row, mlx->rows);
         if (mlx->cols == 0)
-            mlx->cols = cols;
-        if (mlx->cols != cols)
+            mlx->cols = len;
+        if (mlx->cols != len)
         {
             printf("error");
             exit(0);
         }
         free(line);
         mlx->rows++;
-        pixel->down = (t_pixel*)malloc(sizeof(t_pixel));
+        prev_row = pixel;
         pixel = pixel->down;
     }
     close(fd);
