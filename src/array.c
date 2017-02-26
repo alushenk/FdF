@@ -63,15 +63,16 @@ static void    mas_create(double ***arr, int rows, int cols)
     *arr = result;
 }
 
-int hex_to_int(char *hex, int len)
+int hex_to_int(char **hex)
 {
     size_t result;
     char byte;
 
     result = 0;
-    while (*hex && len--)
+    while (**hex != ' ' && **hex)
     {
-        byte = *hex++;
+        byte = **hex;
+        (*hex)++;
         if (ft_isdigit(byte))
             byte -= '0';
         else if (ft_islower(byte))
@@ -105,8 +106,7 @@ static void    mas_fill(char *path, t_struct *mas)
             if (ft_strncmp(tmp, ",0x", 3) == 0)
             {
                 tmp += 3;
-                mas->color[i][j] = hex_to_int(tmp, 6);
-                tmp += 6;
+                mas->color[i][j] = hex_to_int(&tmp);
             }
             j++;
         }

@@ -16,7 +16,7 @@ int    key_hook(int key, t_struct *mlx)
     old_centre_z = mlx->center_z;
     if (key == KEY_SCALE_INCREASE)
     {
-        mlx->zoom = 1.5;
+        mlx->zoom = STEP_ZOOM_INCREASE;
         zoom_matrix(mlx->arr_x, mlx->rows, mlx->cols, mlx->zoom);
         zoom_matrix(mlx->arr_y, mlx->rows, mlx->cols, mlx->zoom);
         zoom_matrix(mlx->arr_z, mlx->rows, mlx->cols, mlx->zoom);
@@ -27,7 +27,7 @@ int    key_hook(int key, t_struct *mlx)
     }
     else if (key == KEY_SCALE_DECREASE)
     {
-        mlx->zoom = 0.5;
+        mlx->zoom = STEP_ZOOM_DECREASE;
         zoom_matrix(mlx->arr_x, mlx->rows, mlx->cols, mlx->zoom);
         zoom_matrix(mlx->arr_y, mlx->rows, mlx->cols, mlx->zoom);
         zoom_matrix(mlx->arr_z, mlx->rows, mlx->cols, mlx->zoom);
@@ -38,22 +38,22 @@ int    key_hook(int key, t_struct *mlx)
     }
     else if (key == KEY_RIGHT)
     {
-        move_matrix(mlx->arr_x, mlx->rows, mlx->cols, 10);
+        move_matrix(mlx->arr_x, mlx->rows, mlx->cols, STEP_MOVE);
         draw(mlx);
     }
     else if (key == KEY_LEFT)
     {
-        move_matrix(mlx->arr_x, mlx->rows, mlx->cols, -10);
+        move_matrix(mlx->arr_x, mlx->rows, mlx->cols, -STEP_MOVE);
         draw(mlx);
     }
     else if (key == KEY_UP)
     {
-        move_matrix(mlx->arr_y, mlx->rows, mlx->cols, -10);
+        move_matrix(mlx->arr_y, mlx->rows, mlx->cols, -STEP_MOVE);
         draw(mlx);
     }
     else if (key == KEY_DOWN)
     {
-        move_matrix(mlx->arr_y, mlx->rows, mlx->cols, 10);
+        move_matrix(mlx->arr_y, mlx->rows, mlx->cols, STEP_MOVE);
         draw(mlx);
     }
     else if (key == KEY_EXIT)
@@ -64,7 +64,7 @@ int    key_hook(int key, t_struct *mlx)
     {
         move_matrix(mlx->arr_y, mlx->rows, mlx->cols, -old_centre_y);
         move_matrix(mlx->arr_z, mlx->rows, mlx->cols, -old_centre_z);
-        rotate_x(mlx, mlx->rows, mlx->cols, -2);
+        rotate_x(mlx, mlx->rows, mlx->cols, -STEP_ROTATE);
         move_matrix(mlx->arr_y, mlx->rows, mlx->cols, old_centre_y);
         move_matrix(mlx->arr_z, mlx->rows, mlx->cols, old_centre_z);
         draw(mlx);
@@ -73,7 +73,7 @@ int    key_hook(int key, t_struct *mlx)
     {
         move_matrix(mlx->arr_y, mlx->rows, mlx->cols, -old_centre_y);
         move_matrix(mlx->arr_z, mlx->rows, mlx->cols, -old_centre_z);
-        rotate_x(mlx, mlx->rows, mlx->cols, 2);
+        rotate_x(mlx, mlx->rows, mlx->cols, STEP_ROTATE);
         move_matrix(mlx->arr_y, mlx->rows, mlx->cols, old_centre_y);
         move_matrix(mlx->arr_z, mlx->rows, mlx->cols, old_centre_z);
         draw(mlx);
@@ -82,7 +82,7 @@ int    key_hook(int key, t_struct *mlx)
     {
         move_matrix(mlx->arr_x, mlx->rows, mlx->cols, -old_centre_x);
         move_matrix(mlx->arr_z, mlx->rows, mlx->cols, -old_centre_z);
-        rotate_y(mlx, mlx->rows, mlx->cols, -2);
+        rotate_y(mlx, mlx->rows, mlx->cols, -STEP_ROTATE);
         move_matrix(mlx->arr_x, mlx->rows, mlx->cols, old_centre_x);
         move_matrix(mlx->arr_z, mlx->rows, mlx->cols, old_centre_z);
         draw(mlx);
@@ -91,7 +91,7 @@ int    key_hook(int key, t_struct *mlx)
     {
         move_matrix(mlx->arr_x, mlx->rows, mlx->cols, -old_centre_x);
         move_matrix(mlx->arr_z, mlx->rows, mlx->cols, -old_centre_z);
-        rotate_y(mlx, mlx->rows, mlx->cols, 2);
+        rotate_y(mlx, mlx->rows, mlx->cols, STEP_ROTATE);
         move_matrix(mlx->arr_x, mlx->rows, mlx->cols, old_centre_x);
         move_matrix(mlx->arr_z, mlx->rows, mlx->cols, old_centre_z);
         draw(mlx);
@@ -100,7 +100,7 @@ int    key_hook(int key, t_struct *mlx)
     {
         move_matrix(mlx->arr_x, mlx->rows, mlx->cols, -old_centre_x);
         move_matrix(mlx->arr_y, mlx->rows, mlx->cols, -old_centre_y);
-        rotate_z(mlx, mlx->rows, mlx->cols, 2);
+        rotate_z(mlx, mlx->rows, mlx->cols, STEP_ROTATE);
         move_matrix(mlx->arr_x, mlx->rows, mlx->cols, old_centre_x);
         move_matrix(mlx->arr_y, mlx->rows, mlx->cols, old_centre_y);
         draw(mlx);
@@ -110,7 +110,7 @@ int    key_hook(int key, t_struct *mlx)
     {
         move_matrix(mlx->arr_x, mlx->rows, mlx->cols, -old_centre_x);
         move_matrix(mlx->arr_y, mlx->rows, mlx->cols, -old_centre_y);
-        rotate_z(mlx, mlx->rows, mlx->cols, -2);
+        rotate_z(mlx, mlx->rows, mlx->cols, -STEP_ROTATE);
         move_matrix(mlx->arr_x, mlx->rows, mlx->cols, old_centre_x);
         move_matrix(mlx->arr_y, mlx->rows, mlx->cols, old_centre_y);
         draw(mlx);

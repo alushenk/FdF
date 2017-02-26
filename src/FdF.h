@@ -14,10 +14,14 @@
 # include "../externals/get_next_line/get_next_line.h"
 # include "../externals/libft/libft.h"
 
-# define WINDOW_SIZE_X 1500
-# define WINDOW_SIZE_Y 1000
+# define WINDOW_SIZE_X 2000
+# define WINDOW_SIZE_Y 1250
 
 # define RAD (3.14 / 180)
+# define STEP_MOVE 20
+# define STEP_ROTATE 2
+# define STEP_ZOOM_INCREASE 1.5
+# define STEP_ZOOM_DECREASE 0.5
 
 #define KEY_LEFT 123
 #define KEY_RIGHT 124
@@ -59,6 +63,14 @@ typedef struct      s_struct
     int     bits_per_pixel;
     int     line_size;
 }                   t_struct;
+
+typedef struct      s_pixel
+{
+    double  x;
+    double  y;
+    double  z;
+    int     color;
+}                   t_pixel;
 
 /*
 ** array.c

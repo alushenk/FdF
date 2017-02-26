@@ -9,8 +9,8 @@ static void    write_pixel(double x, double y, t_struct *mlx)
     int a;
 
     a = ((int)y * mlx->line_size + ((int)x * (mlx->bits_per_pixel / 8)));
-    mlx->image_data[a] = 255;
-    mlx->image_data[a + 1] = 0;
+    mlx->image_data[a] = 100;
+    mlx->image_data[a + 1] = 100;
     mlx->image_data[a + 2] = 0;
 }
 
@@ -21,25 +21,24 @@ static int     in_range(double x, double y, double max_x, double max_y)
     return (1);
 }
 
-static void    draw_line(double x0, double y0, double x1, double y1, t_struct *mlx)
+static void    draw_line(int x0, int y0, int x1, int y1, t_struct *mlx)
 {
     int     move_x;
     int     move_y;
-    double     delta_x;
-    double     delta_y;
-    double     error;
-
-    double     error2;
+    int     delta_x;
+    int     delta_y;
+    int     error;
+    int     error2;
 
     move_x = x0 < x1 ? 1 : -1;
     move_y = y0 < y1 ? 1 : -1;
-    delta_x = fabs(x1 - x0);
-    delta_y = fabs(y1 - y0);
+    delta_x = abs(x1 - x0);
+    delta_y = abs(y1 - y0);
     error = delta_x - delta_y;
 
     if (in_range(x1, y1, mlx->cols, mlx->rows))
         write_pixel(x1, y1, mlx);
-    while (fabs(x1 - x0) > 0.9 || fabs(y1 - y0) > 0.9)
+    while (x0 != x1|| y0 != y1)
     {
         if (in_range(x0, y0, mlx->cols, mlx->rows))
             write_pixel(x0, y0, mlx);
