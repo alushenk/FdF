@@ -15,11 +15,35 @@ void    zoom(t_struct *mlx, double old_centre_x, double old_centre_y, double zoo
 
 void    draw_rotate(t_struct *mlx, double old_centre_a, double old_centre_b, double step, int combination)
 {
-    move_matrix(mlx->pixel, -old_centre_a, combination);
-    move_matrix(mlx->pixel, -old_centre_b, combination);
+    int a;
+    int b;
+
+    if (combination == 0)
+    {
+        a = 3;
+        b = 4;
+    }
+    else if (combination == 1)
+    {
+        a = 3;
+        b = 5;
+    }
+    else if (combination == 2)
+    {
+        a = 4;
+        b = 5;
+    }
+    else
+    {
+        printf("error\n");
+        a = 0;
+        b = 0;
+    }
+    move_matrix(mlx->pixel, -old_centre_a, a);
+    move_matrix(mlx->pixel, -old_centre_b, b);
     rotate(mlx->pixel, step, combination);
-    move_matrix(mlx->pixel, old_centre_a, combination);
-    move_matrix(mlx->pixel, old_centre_b, combination);
+    move_matrix(mlx->pixel, old_centre_a, a);
+    move_matrix(mlx->pixel, old_centre_b, b);
     draw(mlx);
 }
 

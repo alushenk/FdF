@@ -19,7 +19,7 @@
 
 # define RAD (3.14 / 180)
 # define STEP_MOVE 20
-# define STEP_ROTATE 1
+# define STEP_ROTATE 2
 # define STEP_ZOOM_INCREASE 1.5
 # define STEP_ZOOM_DECREASE 0.5
 

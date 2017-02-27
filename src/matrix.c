@@ -58,6 +58,10 @@ void    move_matrix(t_pixel *pixel, double move, int combination)
             {
                 x->y += move;
             }
+            else if (combination == 5)
+            {
+                x->z += move;
+            }
             x = x->right;
         }
         y = y->down;
@@ -69,12 +73,15 @@ void    find_centre(t_struct *mlx)
     double max_x;
     double max_y;
     double max_z;
+    double min_x;
+    double min_y;
+    double min_z;
     t_pixel *y;
     t_pixel *x;
 
-    mlx->center_x = mlx->pixel->x;
-    mlx->center_y = mlx->pixel->y;
-    mlx->center_z = mlx->pixel->z;
+    min_x = mlx->pixel->x;
+    min_y = mlx->pixel->y;
+    min_z = mlx->pixel->z;
     max_x = mlx->pixel->x;
     max_y = mlx->pixel->y;
     max_z = mlx->pixel->z;
@@ -86,23 +93,23 @@ void    find_centre(t_struct *mlx)
         {
             if (x->x > max_x)
                 max_x = x->x;
-            if (x->x < mlx->center_x)
-                mlx->center_x = x->x;
+            if (x->x < min_x)
+                min_x = x->x;
             if (x->y > max_y)
                 max_y = x->y;
-            if (x->y < mlx->center_y)
-                mlx->center_y = x->y;
+            if (x->y < min_y)
+                min_y = x->y;
             if (x->z > max_z)
                 max_z = x->z;
-            if (x->z < mlx->center_z)
-                mlx->center_z = x->z;
+            if (x->z < min_z)
+                min_z = x->z;
             x = x->right;
         }
         y = y->down;
     }
-    mlx->center_x = mlx->center_x + (max_x - mlx->center_x) / 2;
-    mlx->center_y = mlx->center_y + (max_y - mlx->center_y) / 2;
-    mlx->center_z = mlx->center_z + (max_z - mlx->center_z) / 2;
+    mlx->center_x = min_x + (max_x - min_x) / 2;
+    mlx->center_y = min_y + (max_y - min_y) / 2;
+    mlx->center_z = min_z + (max_z - min_z) / 2;
 }
 
 void    prepare_matrix(t_struct *mlx)
