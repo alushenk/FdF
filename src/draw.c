@@ -4,14 +4,14 @@
 
 #include "FdF.h"
 
-static void    write_pixel(int x, int y, int color, t_struct *mlx)
+static void    write_pixel(int x, int y, int *color, t_struct *mlx)
 {
     int a;
 
     a = ((int)y * mlx->line_size + ((int)x * (mlx->bits_per_pixel / 8)));
-    mlx->image_data[a] = 100;
-    mlx->image_data[a + 1] = 100;
-    mlx->image_data[a + 2] = 0;
+    mlx->image_data[a] = color[0];
+    mlx->image_data[a + 1] = color[1];
+    mlx->image_data[a + 2] = color[2];
 }
 
 static int     in_range(int x, int y)
@@ -21,18 +21,37 @@ static int     in_range(int x, int y)
     return (1);
 }
 
+void     get_color(int *color, int start, int end, int dist)
+{
+    color[0] = ((char)start>>(2 * 8)) - ((char)end>>(2 * 8));
+    color[1] = ((char)start>>(1 * 8)) - ((char)end>>(1 * 8));
+    color[2] = (char)start - (char)end;
+    if (dist)
+    {
+        color[0] /= dist;
+        color[1] /= dist;
+        color[2] /= dist;
+    }
+}
+
 static void    draw_line(t_pixel *start, t_pixel *end, t_struct *mlx)
 {
     int     move_x;
     int     move_y;
     int     delta_x;
     int     delta_y;
+
+    int     *step_color;
+    int     *color;
+
     int     error;
     int     error2;
     int     x;
     int     y;
     int     x1;
     int     y1;
+
+
 
     x = start->x;
     y = start->y;
@@ -44,12 +63,19 @@ static void    draw_line(t_pixel *start, t_pixel *end, t_struct *mlx)
     delta_y = abs(y1 - y);
     error = delta_x - delta_y;
 
-    if (in_range(end->x, end->y))
-        write_pixel(end->x, end->y, end->color, mlx);
+    step_color = (int*)malloc(sizeof(int) * 3);
+    color = (int*)malloc(sizeof(int) * 3);
+    get_color(step_color, start->color, end->color, (delta_x > delta_y) ? delta_x : delta_y);
+    color[0] = (char)start>>(2 * 8);
+    color[1] = (char)start>>(1 * 8);
+    color[2] = (char)start;
+
+    //if (in_range(end->x, end->y))
+    //    write_pixel(end->x, end->y, end->color, mlx);
     while (x != x1 || y != y1)
     {
         if (in_range(x, y))
-            write_pixel(x, y, end->color, mlx);
+            write_pixel(x, y, color, mlx);
         error2 = error * 2;
         if (error2 > -delta_y)
         {
@@ -61,7 +87,12 @@ static void    draw_line(t_pixel *start, t_pixel *end, t_struct *mlx)
             error += delta_x;
             y += move_y;
         }
+        color[0] += step_color[0];
+        color[1] += step_color[1];
+        color[2] += step_color[2];
     }
+    free(step_color);
+    free(color);
 }
 
 static void    draw_map(t_struct *mlx)
@@ -79,8 +110,8 @@ static void    draw_map(t_struct *mlx)
                 draw_line(x, x->right, mlx);
             if (x->down && x->down->y)
                 draw_line(x, x->down, mlx);
-            //if (x + 1 < mlx->cols && y + 1 < mlx->rows)
-            //    draw_line(mlx->arr_x[y][x], mlx->arr_y[y][x], mlx->arr_x[y][x + 1], mlx->arr_y[y + 1][x], mlx);
+            if (x->right && x->right->down && x->right->down->x && x->right->down-y)
+                draw_line(x, x->right->down, mlx);
             x = x->right;
         }
         y = y->down;
