@@ -90,7 +90,7 @@ int main(int argc, char **argv)
         printf("\n");
         */
 
-        print_mlx(mlx->pixel);
+        //print_mlx(mlx->pixel);
         draw(mlx);
 
         mlx_hook(mlx->window, 2, 5, key_hook, mlx);

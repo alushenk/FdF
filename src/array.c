@@ -66,6 +66,8 @@ static int     get_row(char *str, t_pixel *pixel, t_pixel *prev_row, int y)
         {
             prev_row = prev_row->right;
             pixel->right = prev_row->down;
+            if (pixel->right == NULL)
+                pixel->right = new_pixel();
         }
         else
             pixel->right = new_pixel();

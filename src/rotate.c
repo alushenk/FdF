@@ -4,71 +4,54 @@
 
 #include "FdF.h"
 
-void    rotate_x(t_pixel *pixel, int angle)
+void    rotate(t_pixel *pixel, double angle, int combination)
 {
-    double y;
-    double z;
-    t_pixel *col;
-    t_pixel *row;
+    double a;
+    double b;
+    t_pixel *x;
+    t_pixel *y;
 
-    row = pixel;
-    while (row->down)
+    y = pixel;
+    while (y->down)
     {
-        col = row;
-        while (col->right)
+        x = y;
+        while (x->right)
         {
-            y = col->y;
-            z = col->z;
-            col->y = (y * cos(angle * RAD)) - (z * sin(angle * RAD));
-            col->z = (y * sin(angle * RAD)) + (z * cos(angle * RAD));
-            col = col->right;
+            if (combination == 0)
+            {
+                a = x->x;
+                b = x->y;
+            }
+            if (combination == 1)
+            {
+                a = x->x;
+                b = x->z;
+            }
+            else if (combination == 2)
+            {
+                a = x->y;
+                b = x->z;
+            }
+            a = (a * cos(angle * RAD)) - (b * sin(angle * RAD));
+            b = (a * sin(angle * RAD)) + (b * cos(angle * RAD));
+
+            if (combination == 0)
+            {
+                x->x = a;
+                x->y = b;
+            }
+            if (combination == 1)
+            {
+                x->x = a;
+                x->z = b;
+            }
+            else if (combination == 2)
+            {
+                x->y = a;
+                x->z = b;
+            }
+            x = x->right;
         }
-        row = row->down;
-    }
-}
-
-void    rotate_y(t_pixel *pixel, int angle)
-{
-    double x;
-    double z;
-    t_pixel *col;
-    t_pixel *row;
-
-    row = pixel;
-    while (row->down)
-    {
-        col = row;
-        while (col->right)
-        {
-            x = col->x;
-            z = col->z;
-            col->x = (x * cos(angle * RAD)) - (z * sin(angle * RAD));
-            col->z = (x * sin(angle * RAD)) + (z * cos(angle * RAD));
-            col = col->right;
-        }
-        row = row->down;
-    }
-}
-
-void    rotate_z(t_pixel *pixel, int angle)
-{
-    double x;
-    double y;
-    t_pixel *col;
-    t_pixel *row;
-
-    row = pixel;
-    while (row->down)
-    {
-        col = row;
-        while (col->right)
-        {
-            x = col->x;
-            y = col->y;
-            col->x = (x * cos(angle * RAD)) - (y * sin(angle * RAD));
-            col->y = (x * sin(angle * RAD)) + (y * cos(angle * RAD));
-            col = col->right;
-        }
-        row = row->down;
+        y = y->down;
     }
 }

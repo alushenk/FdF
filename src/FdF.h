@@ -19,7 +19,7 @@
 
 # define RAD (3.14 / 180)
 # define STEP_MOVE 20
-# define STEP_ROTATE 2
+# define STEP_ROTATE 1
 # define STEP_ZOOM_INCREASE 1.5
 # define STEP_ZOOM_DECREASE 0.5
 
@@ -85,14 +85,12 @@ int    key_hook(int key, t_struct *mlx);
 */
 void    prepare_matrix(t_struct *mlx);
 void    find_centre(t_struct *mlx);
-void    move_matrix(t_pixel *pixel, double move, int x, int y, int z);
+void    move_matrix(t_pixel *pixel, double move, int combination);
 void    zoom_matrix(t_pixel *pixel, double multiplier);
 /*
 ** rotate.c
 */
-void    rotate_x(t_pixel *pixel, int angle);
-void    rotate_y(t_pixel *pixel, int angle);
-void    rotate_z(t_pixel *pixel, int angle);
+void    rotate(t_pixel *pixel, double angle, int combination);
 
 
 #endif //FDF_FDF_H

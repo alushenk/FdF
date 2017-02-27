@@ -4,6 +4,25 @@
 
 #include "FdF.h"
 
+void    zoom(t_struct *mlx, double old_centre_x, double old_centre_y, double zoom)
+{
+    zoom_matrix(mlx->pixel, zoom);
+    find_centre(mlx);
+    move_matrix(mlx->pixel, old_centre_x - mlx->center_x, 3);
+    move_matrix(mlx->pixel, old_centre_y - mlx->center_y, 4);
+    draw(mlx);
+}
+
+void    draw_rotate(t_struct *mlx, double old_centre_a, double old_centre_b, double step, int combination)
+{
+    move_matrix(mlx->pixel, -old_centre_a, combination);
+    move_matrix(mlx->pixel, -old_centre_b, combination);
+    rotate(mlx->pixel, step, combination);
+    move_matrix(mlx->pixel, old_centre_a, combination);
+    move_matrix(mlx->pixel, old_centre_b, combination);
+    draw(mlx);
+}
+
 int    key_hook(int key, t_struct *mlx)
 {
     double old_centre_x;
@@ -15,37 +34,27 @@ int    key_hook(int key, t_struct *mlx)
     old_centre_y = mlx->center_y;
     old_centre_z = mlx->center_z;
     if (key == KEY_SCALE_INCREASE)
-    {
-        zoom_matrix(mlx->pixel, STEP_ZOOM_INCREASE);
-        find_centre(mlx);
-        move_matrix(mlx->pixel, old_centre_x - mlx->center_x, 1, 1, 0);
-        draw(mlx);
-    }
+        zoom(mlx, old_centre_x, old_centre_y, STEP_ZOOM_INCREASE);
     else if (key == KEY_SCALE_DECREASE)
-    {
-        zoom_matrix(mlx->pixel, STEP_ZOOM_DECREASE);
-        find_centre(mlx);
-        move_matrix(mlx->pixel, old_centre_x - mlx->center_x, 1, 1, 0);
-        draw(mlx);
-    }
+        zoom(mlx, old_centre_x, old_centre_y, STEP_ZOOM_DECREASE);
     else if (key == KEY_RIGHT)
     {
-        move_matrix(mlx->pixel, STEP_MOVE, 1, 0, 0);
+        move_matrix(mlx->pixel, STEP_MOVE, 3);
         draw(mlx);
     }
     else if (key == KEY_LEFT)
     {
-        move_matrix(mlx->pixel, -STEP_MOVE, 1, 0, 0);
+        move_matrix(mlx->pixel, -STEP_MOVE, 3);
         draw(mlx);
     }
     else if (key == KEY_UP)
     {
-        move_matrix(mlx->pixel, -STEP_MOVE, 0, 1, 0);
+        move_matrix(mlx->pixel, -STEP_MOVE, 4);
         draw(mlx);
     }
     else if (key == KEY_DOWN)
     {
-        move_matrix(mlx->pixel, STEP_MOVE, 0, 1, 0);
+        move_matrix(mlx->pixel, STEP_MOVE, 4);
         draw(mlx);
     }
     else if (key == KEY_EXIT)
@@ -53,47 +62,16 @@ int    key_hook(int key, t_struct *mlx)
         exit(0);
     }
     else if (key == KEY_ROTATE_X_RIGHT)
-    {
-        move_matrix(mlx->pixel, -old_centre_y, 0, 1, 1);
-        rotate_x(mlx->pixel, -STEP_ROTATE);
-        move_matrix(mlx->pixel, old_centre_y, 0, 1, 1);
-        draw(mlx);
-    }
+        draw_rotate(mlx, old_centre_y, old_centre_z, -STEP_ROTATE, 2);
     else if (key == KEY_ROTATE_X_LEFT)
-    {
-        move_matrix(mlx->pixel, -old_centre_y, 0, 1, 1);
-        rotate_x(mlx->pixel, STEP_ROTATE);
-        move_matrix(mlx->pixel, old_centre_y, 0, 1, 1);
-        draw(mlx);
-    }
+        draw_rotate(mlx, old_centre_y, old_centre_z, STEP_ROTATE, 2);
     else if (key == KEY_ROTATE_Y_RIGHT)
-    {
-        move_matrix(mlx->pixel, -old_centre_x, 1, 0, 1);
-        rotate_y(mlx->pixel, -STEP_ROTATE);
-        move_matrix(mlx->pixel, old_centre_x, 1, 0, 1);
-        draw(mlx);
-    }
+        draw_rotate(mlx, old_centre_x, old_centre_z, -STEP_ROTATE, 1);
     else if (key == KEY_ROTATE_Y_LEFT)
-    {
-        move_matrix(mlx->pixel, -old_centre_x, 1, 0, 1);
-        rotate_y(mlx->pixel, STEP_ROTATE);
-        move_matrix(mlx->pixel, old_centre_x, 1, 0, 1);
-        draw(mlx);
-    }
+        draw_rotate(mlx, old_centre_x, old_centre_z, STEP_ROTATE, 1);
     else if (key == KEY_ROTATE_Z_RIGHT)
-    {
-        move_matrix(mlx->pixel, -old_centre_x, 1, 1, 0);
-        rotate_z(mlx->pixel, STEP_ROTATE);
-        move_matrix(mlx->pixel, old_centre_x, 1, 1, 0);
-        draw(mlx);
-    }
-
+        draw_rotate(mlx, old_centre_x, old_centre_y, STEP_ROTATE, 0);
     else if (key == KEY_ROTATE_Z_LEFT)
-    {
-        move_matrix(mlx->pixel, -old_centre_x, 1, 1, 0);
-        rotate_z(mlx->pixel, -STEP_ROTATE);
-        move_matrix(mlx->pixel, old_centre_x, 1, 1, 0);
-        draw(mlx);
-    }
+        draw_rotate(mlx, old_centre_x, old_centre_y, -STEP_ROTATE, 0);
     return (0);
 }

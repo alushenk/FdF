@@ -24,7 +24,7 @@ void    zoom_matrix(t_pixel *pixel, double multiplier)
     }
 }
 
-void    move_matrix(t_pixel *pixel, double move, int a, int b, int c)
+void    move_matrix(t_pixel *pixel, double move, int combination)
 {
     t_pixel *x;
     t_pixel *y;
@@ -35,12 +35,29 @@ void    move_matrix(t_pixel *pixel, double move, int a, int b, int c)
         x = y;
         while (x->right)
         {
-            if (a)
+            if (combination == 0)
+            {
                 x->x += move;
-            if (b)
                 x->y += move;
-            if (c)
+            }
+            if (combination == 1)
+            {
+                x->x += move;
                 x->z += move;
+            }
+            else if (combination == 2)
+            {
+                x->y += move;
+                x->z += move;
+            }
+            else if (combination == 3)
+            {
+                x->x += move;
+            }
+            else if (combination == 4)
+            {
+                x->y += move;
+            }
             x = x->right;
         }
         y = y->down;
@@ -99,7 +116,7 @@ void    prepare_matrix(t_struct *mlx)
         window_centre_y = WINDOW_SIZE_Y / 2;
         zoom_matrix(mlx->pixel, STEP_ZOOM_INCREASE);
         find_centre(mlx);
-        move_matrix(mlx->pixel, window_centre_x - mlx->center_x, 1, 0, 0);
-        move_matrix(mlx->pixel, window_centre_y - mlx->center_y, 0, 1, 0);
+        move_matrix(mlx->pixel, window_centre_x - mlx->center_x, 3);
+        move_matrix(mlx->pixel, window_centre_y - mlx->center_y, 4);
     }
 }

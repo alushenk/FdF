@@ -31,17 +31,22 @@ static void    draw_line(t_pixel *start, t_pixel *end, t_struct *mlx)
     int     error2;
     int     x;
     int     y;
+    int     x1;
+    int     y1;
 
-    move_x = start->x < end->x ? 1 : -1;
-    move_y = start->y < end->y ? 1 : -1;
-    delta_x = (int)fabs(end->x - start->y);
-    delta_y = (int)fabs(end->y - start->y);
-    error = delta_x - delta_y;
     x = start->x;
     y = start->y;
+    x1 = end->x;
+    y1 = end->y;
+    move_x = start->x < end->x ? 1 : -1;
+    move_y = start->y < end->y ? 1 : -1;
+    delta_x = abs(x1 - x);
+    delta_y = abs(y1 - y);
+    error = delta_x - delta_y;
+
     if (in_range(end->x, end->y))
         write_pixel(end->x, end->y, end->color, mlx);
-    while (x != (int)end->x|| y != (int)end->y)
+    while (x != x1 || y != y1)
     {
         if (in_range(x, y))
             write_pixel(x, y, end->color, mlx);
@@ -70,9 +75,9 @@ static void    draw_map(t_struct *mlx)
         x = y;
         while (x->right)
         {
-            if (x->right->x)
+            if (x->right && x->right->x)
                 draw_line(x, x->right, mlx);
-            if (x->down->y)
+            if (x->down && x->down->y)
                 draw_line(x, x->down, mlx);
             //if (x + 1 < mlx->cols && y + 1 < mlx->rows)
             //    draw_line(mlx->arr_x[y][x], mlx->arr_y[y][x], mlx->arr_x[y][x + 1], mlx->arr_y[y + 1][x], mlx);
