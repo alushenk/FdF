@@ -9,9 +9,9 @@ static void    write_pixel(int x, int y, double *color, t_struct *mlx)
     int a;
 
     a = ((int)y * mlx->line_size + ((int)x * (mlx->bits_per_pixel / 8)));
-    mlx->image_data[a] = color[2];
-    mlx->image_data[a + 1] = color[1];
-    mlx->image_data[a + 2] = color[0];
+    mlx->image_data[a] = (unsigned char)color[2];
+    mlx->image_data[a + 1] = (unsigned char)color[1];
+    mlx->image_data[a + 2] = (unsigned char)color[0];
 }
 
 static int     in_range(int x, int y)
@@ -47,17 +47,6 @@ static void    draw_line(t_pixel *start, t_pixel *end, t_struct *mlx, double *co
     int     y;
     int     x1;
     int     y1;
-
-    //((start->color == 8554658) && (end->color == 15777215))
-    //if (!in_range(start->x, start->y) && !in_range(end->x, end->y))
-    //    return ;
-
-    if (end->color == 0)
-        end->color = 16777215;
-    if (start->color == 0)
-        start->color = 16777215;
-
-
 
     x = start->x;
     y = start->y;

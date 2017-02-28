@@ -81,21 +81,10 @@ int main(int argc, char **argv)
         mlx->init = mlx_init();
         mlx->window = mlx_new_window(mlx->init, WINDOW_SIZE_X, WINDOW_SIZE_Y, "FdF");
 
-        /*
-        print_mlx(mlx->arr_x, mlx->rows, mlx->cols);
-        printf("\n");
-        print_mlx(mlx->arr_y, mlx->rows, mlx->cols);
-        printf("\n");
-        print_mlx(mlx->arr_z, mlx->rows, mlx->cols);
-        printf("\n");
-        */
-
-        //print_mlx(mlx->pixel);
         draw(mlx);
 
         mlx_hook(mlx->window, 2, 5, key_hook, mlx);
         mlx_hook(mlx->window, 17, 0L, exit_button, 0);
-        //mlx_mouse_hook(mlx->window, print_mouse, mlx);
         mlx_loop(mlx->init);
     }
     else
