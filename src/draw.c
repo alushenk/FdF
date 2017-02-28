@@ -25,7 +25,7 @@ void     get_color(double *color, int start, int end, double dist)
 {
     color[0] = (((unsigned char)(end>>(2 * 8)) - (unsigned char)(start>>(2 * 8))));
     color[1] = (((unsigned char)(end>>(1 * 8)) - (unsigned char)(start>>(1 * 8))));
-    color[2] = (unsigned char)start - (unsigned char)end;
+    color[2] = (unsigned char)end - (unsigned char)start;
     if (dist)
     {
         color[0] /= dist;
@@ -116,8 +116,8 @@ static void    draw_map(t_struct *mlx)
                 draw_line(x, x->right, mlx, color, color_step);
             if (x->down && x->down->y)
                 draw_line(x, x->down, mlx, color, color_step);
-            //if (x->right && x->right->down && x->right->down->x && x->right->down-y)
-            //    draw_line(x, x->right->down, mlx, color, color_step);
+            if (x->right && x->right->down && x->right->down->x && x->right->down-y)
+                draw_line(x, x->right->down, mlx, color, color_step);
             x = x->right;
         }
         y = y->down;
