@@ -24,7 +24,7 @@ void	write_pixel(int x, int y, double *color, t_map *mlx)
 
 int		in_range(int x, int y)
 {
-	if (x < 0 || y < 0 || x >= WINDOW_SIZE_X || y >= WINDOW_SIZE_Y)
+	if (x < 0 || y < 0 || x >= WIN_SIZE_X || y >= WIN_SIZE_Y)
 		return (0);
 	return (1);
 }

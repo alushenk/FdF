@@ -86,9 +86,9 @@ void		draw(t_map *mlx)
 	{
 		mlx_destroy_image(mlx->init, mlx->img);
 	}
-	mlx->img = mlx_new_image(mlx->init, WINDOW_SIZE_X, WINDOW_SIZE_Y);
+	mlx->img = mlx_new_image(mlx->init, WIN_SIZE_X, WIN_SIZE_Y);
 	mlx->img_d = mlx_get_data_addr(mlx->img, &mlx->bpp, &mlx->l_size, &mlx->e);
 	prepare_matrix(mlx);
 	draw_map(mlx);
-	mlx_put_image_to_window(mlx->init, mlx->window, mlx->img, 0, 0);
+	mlx_put_image_to_window(mlx->init, mlx->win, mlx->img, 0, 0);
 }

@@ -15,8 +15,8 @@
 
 #define u_char unsigned char
 
-# define WINDOW_SIZE_X 2000
-# define WINDOW_SIZE_Y 1250
+# define WIN_SIZE_X 2000
+# define WIN_SIZE_Y 1250
 
 # define RAD (3.14 / 180)
 # define STEP_MOVE 20
@@ -49,7 +49,7 @@ typedef struct      s_pixel
     struct s_pixel  *down;
 }                   t_pixel;
 
-typedef struct      s_struct
+typedef struct      s_map
 {
     int cols;
     int rows;
@@ -61,7 +61,7 @@ typedef struct      s_struct
     t_pixel *pixel;
 
     void    *init;
-    void    *window;
+    void    *win;
     void    *img;
 	char    *img_d;
     int     e;
