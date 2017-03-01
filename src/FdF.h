@@ -79,6 +79,13 @@ typedef struct      s_limits
 	double	min_z;
 }                   t_limits;
 
+typedef struct      s_oldcent
+{
+	double	old_x;
+	double	old_y;
+	double	old_z;
+}                   t_oldcent;
+
 typedef struct      s_bresenham
 {
 	int move_x;
@@ -120,7 +127,7 @@ void	color_init(double **color, t_pixel *start);
 ** events.c
 */
 int    key_hook(int key, t_map *mlx);
-void    draw_rotate(t_map *mlx, double old_centre_a, double old_centre_b, double step, int combination);
+static void		draw_rotate(t_map *mlx, t_oldcent *oldcentre, double step, int comb);
 /*
 ** matrix.c
 */
