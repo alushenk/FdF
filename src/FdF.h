@@ -7,12 +7,13 @@
 
 # include <math.h>
 # include <mlx.h>
-//# include <X11/X.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include "../externals/get_next_line/get_next_line.h"
 # include "../externals/libft/libft.h"
+
+#define u_char unsigned char
 
 # define WINDOW_SIZE_X 2000
 # define WINDOW_SIZE_Y 1250
@@ -48,16 +49,6 @@ typedef struct      s_pixel
     struct s_pixel  *down;
 }                   t_pixel;
 
-typedef struct      s_limits
-{
-	double	max_x;
-	double	max_y;
-	double	max_z;
-	double	min_x;
-	double	min_y;
-	double	min_z;
-}                   t_limits;
-
 typedef struct      s_struct
 {
     int cols;
@@ -71,12 +62,43 @@ typedef struct      s_struct
 
     void    *init;
     void    *window;
-    void    *image;
-    int     endian;
-    char    *image_data;
-    int     bits_per_pixel;
-    int     line_size;
+    void    *img;
+	char    *img_d;
+    int     e;
+    int     bpp;
+    int     l_size;
 }                   t_map;
+
+typedef struct      s_limits
+{
+	double	max_x;
+	double	max_y;
+	double	max_z;
+	double	min_x;
+	double	min_y;
+	double	min_z;
+}                   t_limits;
+
+typedef struct      s_bresenham
+{
+	int move_x;
+	int move_y;
+	int delta_x;
+	int delta_y;
+	int error;
+	int error2;
+	int x0;
+	int y0;
+	int x1;
+	int y1;
+	double			dist;
+}                   t_bresenham;
+
+typedef struct      s_color
+{
+	double	*color_step;
+	double	*color;
+}                   t_color;
 
 /*
 ** array.c
@@ -87,9 +109,18 @@ void		parse_file(t_map *mlx, int fd);
 */
 void    draw(t_map *mlx);
 /*
+ * draw0.c
+ */
+void	write_pixel(int x, int y, double *color, t_map *mlx);
+int	in_range(int x, int y);
+void	get_color(double *color, int start, int end, double dist);
+void	bresen_init(t_bresenham *b, t_pixel *start, t_pixel *end);
+void	color_init(double **color, t_pixel *start);
+/*
 ** events.c
 */
 int    key_hook(int key, t_map *mlx);
+void    draw_rotate(t_map *mlx, double old_centre_a, double old_centre_b, double step, int combination);
 /*
 ** matrix.c
 */

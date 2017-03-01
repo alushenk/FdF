@@ -56,7 +56,7 @@ static void    struct_init(t_map **mlx)
         *mlx = (t_map*)malloc(sizeof(t_map));
     (*mlx)->init = NULL;
     (*mlx)->window = NULL;
-    (*mlx)->image = NULL;
+    (*mlx)->img = NULL;
     (*mlx)->center_x = 0;
     (*mlx)->center_y = 0;
     (*mlx)->center_z = 0;

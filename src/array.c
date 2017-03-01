@@ -47,22 +47,22 @@ int				hex_to_int(char **hex)
 	return ((int)result);
 }
 
-static void		assign_pixel(char **str, t_pixel *prev_row, t_pixel *pixel)
+static void		assign_pixel(char **str, t_pixel **prev_row, t_pixel **pixel)
 {
 	if (ft_strncmp(*str, ",0x", 3) == 0)
 	{
-		str += 3;
-		pixel->color = hex_to_int(str);
+		(*str) += 3;
+		(*pixel)->color = hex_to_int(str);
 	}
-	if (prev_row && prev_row->right)
+	if ((*prev_row) && (*prev_row)->right)
 	{
-		prev_row = prev_row->right;
-		pixel->right = prev_row->down;
-		if (pixel->right == NULL)
-			pixel->right = new_pixel();
+		(*prev_row) = (*prev_row)->right;
+		(*pixel)->right = (*prev_row)->down;
+		if ((*pixel)->right == NULL)
+			(*pixel)->right = new_pixel();
 	}
 	else
-		pixel->right = new_pixel();
+		(*pixel)->right = new_pixel();
 }
 
 static int		get_row(char *str, t_pixel *pixel, t_pixel *prev_row, int y)
@@ -70,6 +70,8 @@ static int		get_row(char *str, t_pixel *pixel, t_pixel *prev_row, int y)
 	int			result;
 
 	result = 0;
+	if (str == NULL)
+		return (0);
 	while (*str)
 	{
 		while (*str == ' ')
@@ -81,7 +83,7 @@ static int		get_row(char *str, t_pixel *pixel, t_pixel *prev_row, int y)
 			result++;
 			pixel->z = atoi_skip(&str);
 		}
-		assign_pixel(&str, prev_row, pixel);
+		assign_pixel(&str, &prev_row, &pixel);
 		pixel->down = new_pixel();
 		pixel = pixel->right;
 		while (*str && !ft_isdigit(*str))

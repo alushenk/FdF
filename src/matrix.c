@@ -82,6 +82,7 @@ void		prepare_matrix(t_map *mlx)
 
 	if (mlx->center_x == 0 && mlx->center_y == 0)
 	{
+		rotate(mlx->pixel, 30, 2);
 		window_centre_x = WINDOW_SIZE_X / 2;
 		window_centre_y = WINDOW_SIZE_Y / 2;
 		zoom_matrix(mlx->pixel, STEP_ZOOM_INCREASE);
