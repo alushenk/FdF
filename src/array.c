@@ -88,6 +88,8 @@ static int		get_row(char *str, t_pixel *pixel, t_pixel *prev_row, int y)
 		pixel = pixel->right;
 		while (*str && !ft_isdigit(*str))
 			str++;
+		if (prev_row && prev_row->right == NULL)
+			return (result);
 	}
 	return (result);
 }
@@ -107,7 +109,7 @@ void			parse_file(t_map *mlx, int fd)
 		len = get_row(line, pixel, prev_row, mlx->rows);
 		if (mlx->cols == 0)
 			mlx->cols = len;
-		if (mlx->cols < len)
+		if (len < mlx->cols)
 			exit(0);
 		free(line);
 		mlx->rows++;

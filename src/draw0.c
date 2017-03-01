@@ -17,6 +17,7 @@ void	write_pixel(int x, int y, double *color, t_map *mlx)
 	int a;
 
 	a = (y * mlx->l_size + (x * (mlx->bpp / 8)));
+	a += mlx->bpp;
 	mlx->img_d[a] = (unsigned char)color[2];
 	mlx->img_d[a + 1] = (unsigned char)color[1];
 	mlx->img_d[a + 2] = (unsigned char)color[0];
