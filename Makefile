@@ -5,13 +5,16 @@ NAME = FdF.a
 
 SRCDIR = src
 
+GNLDIR = externals/get_next_line
+
 SRC =   main.c \
         FdF.c \
         array.c \
         draw.c \
         matrix.c \
         events.c \
-        externals/get_next_line/get_next_line.c
+        rotate.c \
+        $(GNLDIR)/get_next_line.c
 
 OBJ = $($(SRCDIR)/SRC:.c=.o)
 

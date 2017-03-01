@@ -4,7 +4,7 @@
 
 #include "FdF.h"
 
-static void    write_pixel(int x, int y, double *color, t_struct *mlx)
+static void    write_pixel(int x, int y, double *color, t_map *mlx)
 {
     int a;
 
@@ -34,7 +34,7 @@ void     get_color(double *color, int start, int end, double dist)
     }
 }
 
-static void    draw_line(t_pixel *start, t_pixel *end, t_struct *mlx, double *color, double *color_step)
+static void    draw_line(t_pixel *start, t_pixel *end, t_map *mlx, double *color, double *color_step)
 {
     int     move_x;
     int     move_y;
@@ -86,7 +86,7 @@ static void    draw_line(t_pixel *start, t_pixel *end, t_struct *mlx, double *co
         write_pixel(end->x, end->y, color, mlx);
 }
 
-static void    draw_map(t_struct *mlx)
+static void    draw_map(t_map *mlx)
 {
     t_pixel *y;
     t_pixel *x;
@@ -115,7 +115,7 @@ static void    draw_map(t_struct *mlx)
     free(color_step);
 }
 
-void    draw(t_struct *mlx)
+void    draw(t_map *mlx)
 {
     if (mlx->image)
         mlx_destroy_image(mlx->init, mlx->image);

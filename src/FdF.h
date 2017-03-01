@@ -48,6 +48,16 @@ typedef struct      s_pixel
     struct s_pixel  *down;
 }                   t_pixel;
 
+typedef struct      s_limits
+{
+	double	max_x;
+	double	max_y;
+	double	max_z;
+	double	min_x;
+	double	min_y;
+	double	min_z;
+}                   t_limits;
+
 typedef struct      s_struct
 {
     int cols;
@@ -66,27 +76,30 @@ typedef struct      s_struct
     char    *image_data;
     int     bits_per_pixel;
     int     line_size;
-}                   t_struct;
+}                   t_map;
 
 /*
 ** array.c
 */
-void    parse_file(char *path, t_struct *mlx);
+void		parse_file(char *path, t_map *mlx);
 /*
 ** draw.c
 */
-void    draw(t_struct *mlx);
+void    draw(t_map *mlx);
 /*
 ** events.c
 */
-int    key_hook(int key, t_struct *mlx);
+int    key_hook(int key, t_map *mlx);
 /*
 ** matrix.c
 */
-void    prepare_matrix(t_struct *mlx);
-void    find_centre(t_struct *mlx);
+void		prepare_matrix(t_map *mlx);
 void    move_matrix(t_pixel *pixel, double move, int combination);
 void    zoom_matrix(t_pixel *pixel, double multiplier);
+/*
+** centrate_matrix.c
+*/
+void			find_centre(t_map *mlx);
 /*
 ** rotate.c
 */

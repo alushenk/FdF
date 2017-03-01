@@ -4,16 +4,16 @@
 
 #include "FdF.h"
 
-void    zoom(t_struct *mlx, double old_centre_x, double old_centre_y, double zoom)
+void    zoom(t_map *mlx, double old_centre_x, double old_centre_y, double zoom)
 {
     zoom_matrix(mlx->pixel, zoom);
-    find_centre(mlx);
+	find_centre(mlx);
     move_matrix(mlx->pixel, old_centre_x - mlx->center_x, 3);
     move_matrix(mlx->pixel, old_centre_y - mlx->center_y, 4);
     draw(mlx);
 }
 
-void    draw_rotate(t_struct *mlx, double old_centre_a, double old_centre_b, double step, int combination)
+void    draw_rotate(t_map *mlx, double old_centre_a, double old_centre_b, double step, int combination)
 {
     int a;
     int b;
@@ -47,13 +47,13 @@ void    draw_rotate(t_struct *mlx, double old_centre_a, double old_centre_b, dou
     draw(mlx);
 }
 
-int    key_hook(int key, t_struct *mlx)
+int    key_hook(int key, t_map *mlx)
 {
     double old_centre_x;
     double old_centre_y;
     double old_centre_z;
 
-    find_centre(mlx);
+	find_centre(mlx);
     old_centre_x = mlx->center_x;
     old_centre_y = mlx->center_y;
     old_centre_z = mlx->center_z;

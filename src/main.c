@@ -50,10 +50,10 @@ void    print_mlx(t_pixel *pixel)
     printf("\n");
 }
 
-static void    struct_init(t_struct **mlx)
+static void    struct_init(t_map **mlx)
 {
     if (*mlx == NULL)
-        *mlx = (t_struct*)malloc(sizeof(t_struct));
+        *mlx = (t_map*)malloc(sizeof(t_map));
     (*mlx)->init = NULL;
     (*mlx)->window = NULL;
     (*mlx)->image = NULL;
@@ -72,7 +72,7 @@ int exit_button()
 
 int main(int argc, char **argv)
 {
-    t_struct *mlx;
+    t_map *mlx;
 
     if (argc == 2)
     {

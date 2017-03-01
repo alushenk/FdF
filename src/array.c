@@ -89,7 +89,7 @@ static int	get_row(char *str, t_pixel *pixel, t_pixel *prev_row, int y)
 	return (result);
 }
 
-void		parse_file(char *path, t_struct *mlx)
+void		parse_file(char *path, t_map *mlx)
 {
 	int		fd;
 	char	*line;
