@@ -81,7 +81,7 @@ typedef struct      s_struct
 /*
 ** array.c
 */
-void		parse_file(char *path, t_map *mlx);
+void		parse_file(t_map *mlx, int fd);
 /*
 ** draw.c
 */

@@ -73,16 +73,17 @@ int exit_button()
 int main(int argc, char **argv)
 {
     t_map *mlx;
+	int		fd;
 
     if (argc == 2)
     {
         struct_init(&mlx);
-        parse_file(argv[1], mlx);
+		fd = open(argv[1], O_RDONLY);
+        parse_file(mlx, fd);
+		close(fd);
         mlx->init = mlx_init();
-        mlx->window = mlx_new_window(mlx->init, WINDOW_SIZE_X, WINDOW_SIZE_Y, "FdF");
-
+        mlx->window = mlx_new_window(mlx->init, WINDOW_SIZE_X, WINDOW_SIZE_Y, argv[1]);
         draw(mlx);
-
         mlx_hook(mlx->window, 2, 5, key_hook, mlx);
         mlx_hook(mlx->window, 17, 0L, exit_button, 0);
         mlx_loop(mlx->init);
