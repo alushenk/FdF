@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "FdF.h"
+#include "fdf_header.h"
 
 static void	limits_init(t_map *mlx, t_limits *limits)
 {

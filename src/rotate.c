@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "FdF.h"
+#include "fdf_header.h"
 
 static void	get_ab(t_pixel *x, double *a, double *b, int combination)
 {

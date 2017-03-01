@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "FdF.h"
+#include "fdf_header.h"
 
 void	write_pixel(int x, int y, double *color, t_map *mlx)
 {
@@ -31,9 +31,9 @@ int		in_range(int x, int y)
 
 void	get_color(double *color, int start, int end, double dist)
 {
-	color[0] = (((u_char)(end >> 16) - (u_char)(start >> 16)));
-	color[1] = (((u_char)(end >> 8) - (u_char)(start >> 8)));
-	color[2] = (u_char)end - (u_char)start;
+	color[0] = (((U_CHAR)(end >> 16) - (U_CHAR)(start >> 16)));
+	color[1] = (((U_CHAR)(end >> 8) - (U_CHAR)(start >> 8)));
+	color[2] = (U_CHAR)end - (U_CHAR)start;
 	if (dist)
 	{
 		color[0] /= dist;
@@ -58,7 +58,7 @@ void	bresen_init(t_bresenham *b, t_pixel *start, t_pixel *end)
 
 void	color_init(double **color, t_pixel *start)
 {
-	(*color)[0] = (u_char)(start->color >> 16);
-	(*color)[1] = (u_char)(start->color >> 8);
-	(*color)[2] = (u_char)start->color;
+	(*color)[0] = (U_CHAR)(start->color >> 16);
+	(*color)[1] = (U_CHAR)(start->color >> 8);
+	(*color)[2] = (U_CHAR)start->color;
 }

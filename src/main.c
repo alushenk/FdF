@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "FdF.h"
+#include "fdf_header.h"
 
 static void	struct_init(t_map **mlx)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "FdF.h"
+#include "fdf_header.h"
 
 void		zoom_matrix(t_pixel *pixel, double multiplier)
 {
