@@ -1,20 +1,22 @@
 
 
 
-NAME = FdF.a
+NAME = fdf.a
 
 SRCDIR = src
 
 GNLDIR = externals/get_next_line
 
-SRC =   main.c \
-        FdF.c \
-        array.c \
+SRC =   array.c \
+        centrate_matrix.c \
         draw.c \
-        matrix.c \
+        draw0.c \
         events.c \
+        events_get.c \
+        main.c \
+        matrix.c \
         rotate.c \
-        $(GNLDIR)/get_next_line.c
+        ../$(GNLDIR)/get_next_line.c
 
 OBJ = $($(SRCDIR)/SRC:.c=.o)
 
@@ -22,7 +24,7 @@ LIB_PATH = externals/libft/
 
 LIBOBJ = $(LIB_PATH)*.o
 
-HEAD = -I $(SRCDIR)/FdF.h
+HEAD = -I $(SRCDIR)/FdF.h $(GNLDIR)/get_next_line.h
 
 CFLAGS = -c -Wall -Wextra -Werror
 
@@ -32,8 +34,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C $(LIB_PATH)
-	ar rc $(NAME) $(OBJ) $(LIBOBJ)
-	ranlib $(NAME)
+    $(OBJ) -lmlx -framework OpenGL -framework AppKit $(NAME) $(LIBOBJ)
 
 %.o: %.c
 	gcc $(HEAD) $(CFLAGS) -o $@ $<
