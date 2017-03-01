@@ -1,57 +1,74 @@
-//
-// Created by Anton Lushenko on 2/25/17.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rotate.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alushenk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/01 17:26:53 by alushenk          #+#    #+#             */
+/*   Updated: 2017/03/01 17:27:21 by alushenk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "FdF.h"
 
-void    rotate(t_pixel *pixel, double angle, int combination)
+static void	get_ab(t_pixel *x, double *a, double *b, int combination)
 {
-    double a;
-    double b;
-    t_pixel *x;
-    t_pixel *y;
+	if (combination == 0)
+	{
+		*a = x->x;
+		*b = x->y;
+	}
+	if (combination == 1)
+	{
+		*a = x->x;
+		*b = x->z;
+	}
+	else if (combination == 2)
+	{
+		*a = x->y;
+		*b = x->z;
+	}
+}
 
-    y = pixel;
-    while (y->down)
-    {
-        x = y;
-        while (x->right)
-        {
-            if (combination == 0)
-            {
-                a = x->x;
-                b = x->y;
-            }
-            if (combination == 1)
-            {
-                a = x->x;
-                b = x->z;
-            }
-            else if (combination == 2)
-            {
-                a = x->y;
-                b = x->z;
-            }
-            a = (a * cos(angle * RAD)) - (b * sin(angle * RAD));
-            b = (a * sin(angle * RAD)) + (b * cos(angle * RAD));
+static void	set_ab(t_pixel *x, double a, double b, int combination)
+{
+	if (combination == 0)
+	{
+		x->x = a;
+		x->y = b;
+	}
+	if (combination == 1)
+	{
+		x->x = a;
+		x->z = b;
+	}
+	else if (combination == 2)
+	{
+		x->y = a;
+		x->z = b;
+	}
+}
 
-            if (combination == 0)
-            {
-                x->x = a;
-                x->y = b;
-            }
-            if (combination == 1)
-            {
-                x->x = a;
-                x->z = b;
-            }
-            else if (combination == 2)
-            {
-                x->y = a;
-                x->z = b;
-            }
-            x = x->right;
-        }
-        y = y->down;
-    }
+void		rotate(t_pixel *pixel, double angle, int combination)
+{
+	double	a;
+	double	b;
+	t_pixel	*x;
+	t_pixel	*y;
+
+	y = pixel;
+	while (y->down)
+	{
+		x = y;
+		while (x->right)
+		{
+			get_ab(x, &a, &b, combination);
+			a = (a * cos(angle * RAD)) - (b * sin(angle * RAD));
+			b = (a * sin(angle * RAD)) + (b * cos(angle * RAD));
+			set_ab(x, a, b, combination);
+			x = x->right;
+		}
+		y = y->down;
+	}
 }
