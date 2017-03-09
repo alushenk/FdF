@@ -19,7 +19,7 @@ static void	get_ab(t_pixel *x, double *a, double *b, int combination)
 		*a = x->x;
 		*b = x->y;
 	}
-	if (combination == 1)
+	else if (combination == 1)
 	{
 		*a = x->x;
 		*b = x->z;
@@ -38,7 +38,7 @@ static void	set_ab(t_pixel *x, double a, double b, int combination)
 		x->x = a;
 		x->y = b;
 	}
-	if (combination == 1)
+	else if (combination == 1)
 	{
 		x->x = a;
 		x->z = b;

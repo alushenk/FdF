@@ -83,9 +83,7 @@ static void	draw_map(t_map *mlx)
 void		draw(t_map *mlx)
 {
 	if (mlx->img)
-	{
 		mlx_destroy_image(mlx->init, mlx->img);
-	}
 	mlx->img = mlx_new_image(mlx->init, WIN_SIZE_X, WIN_SIZE_Y);
 	mlx->img_d = mlx_get_data_addr(mlx->img, &mlx->bpp, &mlx->l_size, &mlx->e);
 	prepare_matrix(mlx);

@@ -19,7 +19,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include "../externals/get_next_line/get_next_line.h"
-# include "../externals/libft/libft.h"
+# include "../externals/get_next_line/libft/libft.h"
 
 # define U_CHAR unsigned char
 
@@ -150,5 +150,10 @@ void				find_centre(t_map *mlx);
 ** rotate.c
 */
 void				rotate(t_pixel *pixel, double angle, int combination);
+/*
+** error.c
+*/
+void				error_parse(void);
+void				error_open(void);
 
 #endif

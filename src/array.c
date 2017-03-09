@@ -39,9 +39,9 @@ int				hex_to_int(char **hex)
 		if (ft_isdigit(byte))
 			byte -= '0';
 		else if (ft_islower(byte))
-			byte = byte - 'a' + 10;
+			byte = (char)(byte - 'a' + 10);
 		else if (ft_isupper(byte))
-			byte = byte - 'A' + 10;
+			byte = (char)(byte - 'A' + 10);
 		result = (result << 4) | (byte & 0xF);
 	}
 	return ((int)result);
@@ -110,7 +110,7 @@ void			parse_file(t_map *mlx, int fd)
 		if (mlx->cols == 0)
 			mlx->cols = len;
 		if (len < mlx->cols)
-			exit(0);
+			error_parse();
 		free(line);
 		mlx->rows++;
 		prev_row = pixel;

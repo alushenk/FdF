@@ -41,7 +41,8 @@ int			main(int argc, char **argv)
 	if (argc == 2)
 	{
 		struct_init(&mlx);
-		fd = open(argv[1], O_RDONLY);
+		if ((fd = open(argv[1], O_RDONLY)) == -1)
+			error_open();
 		parse_file(mlx, fd);
 		close(fd);
 		mlx->init = mlx_init();
@@ -52,8 +53,6 @@ int			main(int argc, char **argv)
 		mlx_loop(mlx->init);
 	}
 	else
-	{
-		printf("arguments needed");
-	}
+		printf("usage: ./fdf map.fdf");
 	return (0);
 }
