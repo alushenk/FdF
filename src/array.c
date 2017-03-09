@@ -63,6 +63,10 @@ static void		assign_pixel(char **str, t_pixel **prev_row, t_pixel **pixel)
 	}
 	else
 		(*pixel)->right = new_pixel();
+	(*pixel)->down = new_pixel();
+	(*pixel) = (*pixel)->right;
+	while (**str && !ft_isdigit(**str) && **str != '-' && **str != '+')
+		(*str)++;
 }
 
 static int		get_row(char *str, t_pixel *pixel, t_pixel *prev_row, int y)
@@ -78,7 +82,8 @@ static int		get_row(char *str, t_pixel *pixel, t_pixel *prev_row, int y)
 			str++;
 		pixel->x = result;
 		pixel->y = y;
-		if (ft_isdigit(*str) || ((*str == '-' || *str == '+') && ft_isdigit(*(str + 1))))
+		if (ft_isdigit(*str) ||
+				((*str == '-' || *str == '+') && ft_isdigit(*(str + 1))))
 		{
 			result++;
 			pixel->z = atoi_skip(&str);
@@ -86,10 +91,6 @@ static int		get_row(char *str, t_pixel *pixel, t_pixel *prev_row, int y)
 		else
 			str++;
 		assign_pixel(&str, &prev_row, &pixel);
-		pixel->down = new_pixel();
-		pixel = pixel->right;
-		while (*str && !ft_isdigit(*str) && *str != '-' && *str != '+')
-			str++;
 		if (prev_row && prev_row->right == NULL)
 			return (result);
 	}
