@@ -155,5 +155,6 @@ void				rotate(t_pixel *pixel, double angle, int combination);
 */
 void				error_parse(void);
 void				error_open(void);
+void				error_data(void);
 
 #endif

@@ -25,7 +25,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C $(LIB_PATH)
-	gcc -o $(NAME) $(OBJ) $(LIB_PATH)/libft.a -lmlx -framework OpenGL -framework AppKit
+	gcc -Wall -Wextra -Werror -o $(NAME) $(OBJ) $(LIB_PATH)/libft.a -lmlx -framework OpenGL -framework AppKit
 
 %.o: %.c
 	gcc -c -Wall -Wextra -Werror -o $@ $<

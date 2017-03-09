@@ -78,15 +78,17 @@ static int		get_row(char *str, t_pixel *pixel, t_pixel *prev_row, int y)
 			str++;
 		pixel->x = result;
 		pixel->y = y;
-		if (ft_isdigit(*str) || *str == '-' || *str == '+')
+		if (ft_isdigit(*str) || ((*str == '-' || *str == '+') && ft_isdigit(*(str + 1))))
 		{
 			result++;
 			pixel->z = atoi_skip(&str);
 		}
+		else
+			str++;
 		assign_pixel(&str, &prev_row, &pixel);
 		pixel->down = new_pixel();
 		pixel = pixel->right;
-		while (*str && !ft_isdigit(*str))
+		while (*str && !ft_isdigit(*str) && *str != '-' && *str != '+')
 			str++;
 		if (prev_row && prev_row->right == NULL)
 			return (result);
@@ -116,4 +118,6 @@ void			parse_file(t_map *mlx, int fd)
 		prev_row = pixel;
 		pixel = pixel->down;
 	}
+	if (mlx->cols == 0 || mlx->rows == 0)
+		error_data();
 }

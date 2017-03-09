@@ -18,6 +18,12 @@ void		error_parse(void)
 	exit(0);
 }
 
+void		error_data(void)
+{
+	ft_putstr("No data found.");
+	exit(0);
+}
+
 void		error_open(void)
 {
 	ft_putstr("invalid file");
