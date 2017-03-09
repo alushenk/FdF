@@ -78,7 +78,7 @@ static int		get_row(char *str, t_pixel *pixel, t_pixel *prev_row, int y)
 			str++;
 		pixel->x = result;
 		pixel->y = y;
-		if (ft_isdigit(*str))
+		if (ft_isdigit(*str) || *str == '-' || *str == '+')
 		{
 			result++;
 			pixel->z = atoi_skip(&str);

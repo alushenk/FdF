@@ -1,49 +1,42 @@
-
-
-
-NAME = FdF.a
+NAME = FdF
 
 SRCDIR = src
 
 GNLDIR = externals/get_next_line
 
-SRC =   main.c \
-        FdF.c \
-        array.c \
-        draw.c \
-        matrix.c \
-        events.c \
-        rotate.c \
-        $(GNLDIR)/get_next_line.c
+SRC =	array.c \
+		centrate_matrix.c \
+		draw.c \
+		draw0.c \
+		errors.c \
+		events.c \
+		events_get.c \
+		main.c \
+		matrix.c \
+		rotate.c \
 
-OBJ = $($(SRCDIR)/SRC:.c=.o)
+GNL =	get_next_line.c
 
-LIB_PATH = externals/libft/
+OBJ = $(addprefix $(SRCDIR)/, $(SRC:.c=.o)) $(addprefix $(GNLDIR)/, $(GNL:.c=.o))
 
-LIBOBJ = $(LIB_PATH)*.o
-
-HEAD = -I $(SRCDIR)/FdF.h
-
-CFLAGS = -c -Wall -Wextra -Werror
-
-LIBINC = -I $(LIB_PATH)/libft.h -L.$(LIB_PATH) -lft
+LIB_PATH = $(GNLDIR)/libft
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C $(LIB_PATH)
-	ar rc $(NAME) $(OBJ) $(LIBOBJ)
-	ranlib $(NAME)
+	gcc -o $(NAME) $(OBJ) $(LIB_PATH)/libft.a -lmlx -framework OpenGL -framework AppKit
 
 %.o: %.c
-	gcc $(HEAD) $(CFLAGS) -o $@ $<
+	gcc -c -Wall -Wextra -Werror -o $@ $<
 
 clean:
 	rm -f $(OBJ)
 	make clean -C $(LIB_PATH)
 
-fclean: clean
+fclean:
 	rm -f $(NAME)
+	rm -f $(OBJ)
 	make fclean -C $(LIB_PATH)
 
 re: fclean all

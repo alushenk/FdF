@@ -30,6 +30,7 @@ static void	struct_init(t_map **mlx)
 
 int			exit_button(void)
 {
+	ft_putstr("Escape pressed. Exiting..");
 	exit(0);
 }
 
@@ -53,6 +54,6 @@ int			main(int argc, char **argv)
 		mlx_loop(mlx->init);
 	}
 	else
-		printf("usage: ./fdf map.fdf");
+		ft_putstr("Usage : ./fdf <filename>");
 	return (0);
 }

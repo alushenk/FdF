@@ -135,7 +135,7 @@ int					key_hook(int key, t_map *mlx);
 ** events_get.c
 */
 void				get_event_ab(int *a, int *b, int comb);
-void				g_cent(t_cent *o, double *cen_a, double *cen_b, int comb);
+void				get_cent(t_cent *o, double *cen_a, double *cen_b, int comb);
 /*
 ** matrix.c
 */

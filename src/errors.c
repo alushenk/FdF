@@ -14,7 +14,7 @@
 
 void		error_parse(void)
 {
-	ft_putstr("file parsing error");
+	ft_putstr("Found wrong line length. Exiting.");
 	exit(0);
 }
 
